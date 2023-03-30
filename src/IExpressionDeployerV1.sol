@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: CAL
 pragma solidity ^0.8.17;
 
-import "../run/IInterpreterV1.sol";
+import "./IInterpreterV1.sol";
 
 /// @title IExpressionDeployerV1
 /// @notice Companion to `IInterpreterV1` responsible for onchain static code

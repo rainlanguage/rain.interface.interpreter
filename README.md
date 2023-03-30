@@ -1,6 +1,6 @@
 # foundry.template
 
-Docs at https://rainprotocol.github.io/foundry.template
+Docs at https://rainprotocol.github.io/rain.interface.interpreter
 
 ## Use as template
 

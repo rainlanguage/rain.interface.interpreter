@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: CAL
 pragma solidity ^0.8.0;
 
-import "../store/IInterpreterStoreV1.sol";
+import "./IInterpreterStoreV1.sol";
 
 /// @dev The index of a source within a deployed expression that can be evaluated
 /// by an `IInterpreterV1`. MAY be an entrypoint or the index of a source called
