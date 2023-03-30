@@ -1,11 +1,6 @@
-# foundry.template
+# rain.interface.interpreter
 
 Docs at https://rainprotocol.github.io/rain.interface.interpreter
 
-## Use as template
-
-```
-forge init -t rainprotocol/foundry.template <projectname>
-cd <projectname>
-forge install foundry-rs/forge-std
-```
+Interfaces and structs required for arbitrary Solidity contracts to call
+arbitrary interpreters to negotiate the evaluation of expressions between them.
