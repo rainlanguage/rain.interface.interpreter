@@ -1,0 +1,5 @@
+LibEvaluableTest:testHashDifferent((address,address,address),(address,address,address)) (runs: 1024, μ: 4664, ~: 4664)
+LibEvaluableTest:testHashGas0() (gas: 571)
+LibEvaluableTest:testHashGasSlow0() (gas: 563)
+LibEvaluableTest:testHashSame((address,address,address)) (runs: 1024, μ: 1402, ~: 1402)
+LibEvaluableTest:testHashSensitivity((address,address,address),(address,address,address)) (runs: 1024, μ: 7834, ~: 7834)
