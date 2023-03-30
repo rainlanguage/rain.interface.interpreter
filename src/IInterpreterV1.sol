@@ -6,11 +6,12 @@ import "./IInterpreterStoreV1.sol";
 /// @dev The index of a source within a deployed expression that can be evaluated
 /// by an `IInterpreterV1`. MAY be an entrypoint or the index of a source called
 /// internally such as by the `call` opcode.
-type SourceIndex is uint256;
+type SourceIndex is uint16;
+
 /// @dev Encoded information about a specific evaluation including the expression
 /// address onchain, entrypoint and expected return values.
-
 type EncodedDispatch is uint256;
+
 /// @dev The namespace for state changes as requested by the calling contract.
 /// The interpreter MUST apply this namespace IN ADDITION to namespacing by
 /// caller etc.
