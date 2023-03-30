@@ -9,11 +9,7 @@ contract LibEvaluableTest is Test {
     using LibEvaluable for Evaluable;
 
     function testHashDifferent(Evaluable memory a_, Evaluable memory b_) public {
-        vm.assume(
-            a_.interpreter != b_.interpreter
-            || a_.store != b_.store
-            || a_.expression != b_.expression
-        );
+        vm.assume(a_.interpreter != b_.interpreter || a_.store != b_.store || a_.expression != b_.expression);
         assertTrue(a_.hash() != b_.hash());
     }
 
@@ -23,11 +19,7 @@ contract LibEvaluableTest is Test {
     }
 
     function testHashSensitivity(Evaluable memory a_, Evaluable memory b_) public {
-        vm.assume(
-            a_.interpreter != b_.interpreter
-            && a_.store != b_.store
-            && a_.expression != b_.expression
-        );
+        vm.assume(a_.interpreter != b_.interpreter && a_.store != b_.store && a_.expression != b_.expression);
 
         Evaluable memory c_;
 
