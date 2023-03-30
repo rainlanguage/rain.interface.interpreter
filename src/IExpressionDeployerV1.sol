@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: CAL
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.18;
 
 import "./IInterpreterV1.sol";
 
@@ -38,13 +38,7 @@ interface IExpressionDeployerV1 {
     /// @param sender The `msg.sender` providing the op meta.
     /// @param opMeta The raw binary data of the op meta. Maybe compressed data
     /// etc. and is intended for offchain consumption.
-    event DISpair(
-        address sender,
-        address deployer,
-        address interpreter,
-        address store,
-        bytes opMeta
-    );
+    event DISpair(address sender, address deployer, address interpreter, address store, bytes opMeta);
 
     /// Expressions are expected to be deployed onchain as immutable contract
     /// code with a first class address like any other contract or account.
@@ -107,15 +101,7 @@ interface IExpressionDeployerV1 {
     /// with the interpreter.
     /// @return expression The address of the deployed onchain expression. MUST
     /// be valid according to all integrity checks the deployer is aware of.
-    function deployExpression(
-        bytes[] memory sources,
-        uint256[] memory constants,
-        uint256[] memory minOutputs
-    )
+    function deployExpression(bytes[] memory sources, uint256[] memory constants, uint256[] memory minOutputs)
         external
-        returns (
-            IInterpreterV1 interpreter,
-            IInterpreterStoreV1 store,
-            address expression
-        );
+        returns (IInterpreterV1 interpreter, IInterpreterStoreV1 store, address expression);
 }

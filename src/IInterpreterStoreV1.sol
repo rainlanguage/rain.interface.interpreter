@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: CAL
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.18;
 
 import "./IInterpreterV1.sol";
 
@@ -63,8 +63,5 @@ interface IInterpreterStoreV1 {
     /// @param namespace The fully qualified namespace to get a single value for.
     /// @param key The key to get the value for within the namespace.
     /// @return The value OR ZERO IF NOT SET.
-    function get(
-        FullyQualifiedNamespace namespace,
-        uint256 key
-    ) external view returns (uint256);
+    function get(FullyQualifiedNamespace namespace, uint256 key) external view returns (uint256);
 }

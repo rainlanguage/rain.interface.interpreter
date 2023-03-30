@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: CAL
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.18;
 
 import "./IInterpreterStoreV1.sol";
 
@@ -9,14 +9,17 @@ import "./IInterpreterStoreV1.sol";
 type SourceIndex is uint256;
 /// @dev Encoded information about a specific evaluation including the expression
 /// address onchain, entrypoint and expected return values.
+
 type EncodedDispatch is uint256;
 /// @dev The namespace for state changes as requested by the calling contract.
 /// The interpreter MUST apply this namespace IN ADDITION to namespacing by
 /// caller etc.
+
 type StateNamespace is uint256;
 /// @dev Additional bytes that can be used to configure a single opcode dispatch.
 /// Commonly used to specify the number of inputs to a variadic function such
 /// as addition or multiplication.
+
 type Operand is uint256;
 
 /// @dev The default state namespace MUST be used when a calling contract has no

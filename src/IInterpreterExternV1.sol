@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: CAL
-pragma solidity ^0.8.15;
+pragma solidity ^0.8.18;
 
 type EncodedExternDispatch is uint256;
+
 type ExternDispatch is uint256;
 
 /// @title IInterpreterExternV1
@@ -17,8 +18,8 @@ interface IInterpreterExternV1 {
     /// Analogous to the opcode/operand in the interpreter.
     /// @param inputs_ The array of inputs for the dispatched logic.
     /// @return outputs_ The result of the dispatched logic.
-    function extern(
-        ExternDispatch dispatch_,
-        uint256[] memory inputs_
-    ) external view returns (uint256[] memory outputs_);
+    function extern(ExternDispatch dispatch_, uint256[] memory inputs_)
+        external
+        view
+        returns (uint256[] memory outputs_);
 }
