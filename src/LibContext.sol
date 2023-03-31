@@ -5,7 +5,7 @@ import "sol.lib.memory/LibUint256Array.sol";
 
 import {SignatureChecker} from "openzeppelin-contracts/contracts/utils/cryptography/SignatureChecker.sol";
 import {ECDSA} from "openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
-import "rain.interface.interpreter/IInterpreterCallerV1.sol";
+import "./IInterpreterCallerV1.sol";
 
 /// Thrown when the ith signature from a list of signed contexts is invalid.
 error InvalidSignature(uint256 i);
