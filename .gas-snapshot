@@ -1,3 +1,4 @@
+LibEncodedDispatchTest:testRoundTrip(address,uint16,uint16) (runs: 1024, μ: 807, ~: 807)
 LibEvaluableTest:testHashDifferent((address,address,address),(address,address,address)) (runs: 1024, μ: 4664, ~: 4664)
 LibEvaluableTest:testHashGas0() (gas: 571)
 LibEvaluableTest:testHashGasSlow0() (gas: 563)
