@@ -1,3 +1,6 @@
+LibContextTest:testBase() (gas: 717)
+LibContextTest:testBuild0() (gas: 4004)
+LibContextTest:testHash0() (gas: 627)
 LibEncodedDispatchTest:testRoundTrip(address,uint16,uint16) (runs: 1024, μ: 807, ~: 807)
 LibEvaluableTest:testHashDifferent((address,address,address),(address,address,address)) (runs: 1024, μ: 4664, ~: 4664)
 LibEvaluableTest:testHashGas0() (gas: 571)
