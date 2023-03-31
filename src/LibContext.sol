@@ -3,8 +3,8 @@ pragma solidity ^0.8.18;
 
 import "sol.lib.memory/LibUint256Array.sol";
 
-import {SignatureCheckerUpgradeable as SignatureChecker} from "@openzeppelin/contracts-upgradeable/utils/cryptography/SignatureCheckerUpgradeable.sol";
-import {ECDSAUpgradeable as ECDSA} from "@openzeppelin/contracts-upgradeable/utils/cryptography/ECDSAUpgradeable.sol";
+import {SignatureChecker} from "openzeppelin-contracts/contracts/utils/cryptography/SignatureChecker.sol";
+import {ECDSA} from "openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
 import "rain.interface.interpreter/IInterpreterCallerV1.sol";
 
 /// Thrown when the ith signature from a list of signed contexts is invalid.
