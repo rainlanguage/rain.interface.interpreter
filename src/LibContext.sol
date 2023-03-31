@@ -38,11 +38,7 @@ library LibContext {
     /// @return The `msg.sender` and address of the calling contract using this
     /// library, as a context-compatible array.
     function base() internal view returns (uint256[] memory) {
-        return
-            LibUint256Array.arrayFrom(
-                uint(uint160(msg.sender)),
-                uint(uint160(address(this)))
-            );
+        return LibUint256Array.arrayFrom(uint256(uint160(msg.sender)), uint256(uint160(address(this))));
     }
 
     /// Standard hashing process over a list of signed contexts. Situationally
@@ -54,9 +50,7 @@ library LibContext {
     /// a different provenance later.
     /// @param signedContexts_ The list of signed contexts to hash over.
     /// @return The hash of the signed contexts.
-    function hash(
-        SignedContext[] memory signedContexts_
-    ) internal pure returns (bytes32) {
+    function hash(SignedContext[] memory signedContexts_) internal pure returns (bytes32) {
         // Note the use of abi.encode rather than abi.encodePacked here to guard
         // against potential issues due to multiple different inputs colliding
         // on a common encoded output.
@@ -110,10 +104,8 @@ library LibContext {
             // - LibContext.base() + whatever we are provided.
             // - calling context always even if empty
             // - signed contexts + signers if they exist else nothing.
-            uint256 contextLength_ = 1 +
-                baseContext_.length +
-                1 +
-                (signedContexts_.length > 0 ? signedContexts_.length + 1 : 0);
+            uint256 contextLength_ =
+                1 + baseContext_.length + 1 + (signedContexts_.length > 0 ? signedContexts_.length + 1 : 0);
 
             uint256[][] memory context_ = new uint256[][](contextLength_);
             uint256 offset_ = 0;
@@ -137,24 +129,19 @@ library LibContext {
 
                 for (uint256 i_ = 0; i_ < signedContexts_.length; i_++) {
                     if (
-                        !SignatureChecker.isValidSignatureNow(
+                        !
+                        // Unlike `LibContext.hash` we can only hash over
+                        // the context as it's impossible for a signature
+                        // to sign itself.
+                        // Note the use of encodePacked here over a
+                        // single array, not including the length. This
+                        // would be a security issue if multiple dynamic
+                        // length values were hashed over together as
+                        // then many possible inputs could collide with
+                        // a single encoded output.
+                        SignatureChecker.isValidSignatureNow(
                             signedContexts_[i_].signer,
-                            ECDSA.toEthSignedMessageHash(
-                                // Unlike `LibContext.hash` we can only hash over
-                                // the context as it's impossible for a signature
-                                // to sign itself.
-                                // Note the use of encodePacked here over a
-                                // single array, not including the length. This
-                                // would be a security issue if multiple dynamic
-                                // length values were hashed over together as
-                                // then many possible inputs could collide with
-                                // a single encoded output.
-                                keccak256(
-                                    abi.encodePacked(
-                                        signedContexts_[i_].context
-                                    )
-                                )
-                            ),
+                            ECDSA.toEthSignedMessageHash(keccak256(abi.encodePacked(signedContexts_[i_].context))),
                             signedContexts_[i_].signature
                         )
                     ) {
