@@ -129,7 +129,6 @@ library LibContext {
 
                 for (uint256 i_ = 0; i_ < signedContexts_.length; i_++) {
                     if (
-                        !
                         // Unlike `LibContext.hash` we can only hash over
                         // the context as it's impossible for a signature
                         // to sign itself.
@@ -139,7 +138,7 @@ library LibContext {
                         // length values were hashed over together as
                         // then many possible inputs could collide with
                         // a single encoded output.
-                        SignatureChecker.isValidSignatureNow(
+                        !SignatureChecker.isValidSignatureNow(
                             signedContexts_[i_].signer,
                             ECDSA.toEthSignedMessageHash(keccak256(abi.encodePacked(signedContexts_[i_].context))),
                             signedContexts_[i_].signature
