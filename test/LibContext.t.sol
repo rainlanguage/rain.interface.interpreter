@@ -38,11 +38,19 @@ contract LibContextTest is Test {
         }
     }
 
-    function testSignedContextGas0() public {
+    function testSignedContextHashGas0() public {
         SignedContext memory context_ = SignedContext(address(0), new bytes(65), new uint256[](5));
+        LibContext.hash(context_);
         // 1199 gas
         // bytes memory bytes_ = abi.encode(context_);
         // keccak256(bytes_);
+    }
+
+    function testSignedContextHashEncodeGas0() public {
+        SignedContext memory context_ = SignedContext(address(0), new bytes(65), new uint256[](5));
+        // 1199 gas
+        bytes memory bytes_ = abi.encode(context_);
+        keccak256(bytes_);
     }
 
     function testSignedContextGasFuzz(SignedContext memory context_) public {

@@ -36,6 +36,10 @@ struct SignedContext {
     uint256[] context;
 }
 
+uint256 constant SIGNED_CONTEXT_SIGNER_OFFSET = 0;
+uint256 constant SIGNED_CONTEXT_SIGNATURE_OFFSET = 0x20;
+uint256 constant SIGNED_CONTEXT_CONTEXT_OFFSET = 0x40;
+
 /// @title IInterpreterCallerV1
 /// @notice A contract that calls an `IInterpreterV1` via. `eval`. There are near
 /// zero requirements on a caller other than:

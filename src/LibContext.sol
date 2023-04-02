@@ -41,6 +41,24 @@ library LibContext {
         return LibUint256Array.arrayFrom(uint256(uint160(msg.sender)), uint256(uint160(address(this))));
     }
 
+    function hash(SignedContext memory signedContext_) internal pure returns (bytes32 hash_) {
+        uint256 signerOffset_ = SIGNED_CONTEXT_SIGNER_OFFSET;
+        uint256 signatureOffset_ = SIGNED_CONTEXT_SIGNATURE_OFFSET;
+        uint256 contextOffset_ = SIGNED_CONTEXT_CONTEXT_OFFSET;
+        assembly ("memory-safe") {
+            let signer_ := mload(add(signedContext_, signerOffset_))
+            let signature_ := mload(add(signedContext_, signatureOffset_))
+            let signatureHash_ := keccak256(add(signature_, 0x20), mload(signature_))
+            let context_ := mload(add(signedContext_, contextOffset_))
+            let contextHash_ := keccak256(add(context_, 0x20), mul(mload(context_), 0x20))
+            let memPtr_ := mload(0x40)
+            mstore(memPtr_, signer_)
+            mstore(add(memPtr_, 0x20), signatureHash_)
+            mstore(add(memPtr_, 0x40), contextHash_)
+            hash_ := keccak256(memPtr_, 0x60)
+        }
+    }
+
     /// Standard hashing process over a list of signed contexts. Situationally
     /// useful if the calling contract wants to record that it has seen a set of
     /// signed data then later compare it against some input (e.g. to ensure that
