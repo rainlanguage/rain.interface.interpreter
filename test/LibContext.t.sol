@@ -24,6 +24,35 @@ contract LibContextTest is Test {
         );
     }
 
+    function testHash(uint256 foo_) public {
+        assembly ("memory-safe") {
+            mstore(0x00, foo_)
+            pop(keccak256(0x00, 0x20))
+        }
+    }
+
+    function testHashGas0() public {
+        assembly ("memory-safe") {
+            mstore(0, 0)
+            pop(keccak256(0, 0x20))
+        }
+    }
+
+    function testSignedContextGas0() public {
+        SignedContext memory context_ = SignedContext(address(0), new bytes(65), new uint256[](5));
+        // 1199 gas
+        // bytes memory bytes_ = abi.encode(context_);
+        // keccak256(bytes_);
+    }
+
+    function testSignedContextGasFuzz(SignedContext memory context_) public {
+
+    }
+
+    // function testSignedContextGas(SignedContext memory context_) public {
+    //     keccak256(abi.encode(context_));
+    // }
+
     function testBuild0() public {
         // @todo test this better.
         uint256[][] memory expected_ = new uint256[][](2);
