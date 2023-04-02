@@ -16,13 +16,39 @@ contract LibContextTest is Test {
         assertTrue(msg.sender != address(this));
     }
 
-    function testHash0() public {
-        // @todo test this better.
-        assertEq(
-            bytes32(0x569e75fc77c1a856f6daaf9e69d8a9566ca34aa47f9133711ce065a571af0cfd),
-            LibContext.hash(new SignedContext[](0))
-        );
+    function testFuzzHash1() public {
+        SignedContext[] memory signedContexts_ = new SignedContext[](3);
+        signedContexts_[0] = SignedContext(address(0), new bytes(65), new uint256[](5));
+        signedContexts_[1] = SignedContext(address(0), new bytes(65), new uint256[](5));
+        signedContexts_[2] = SignedContext(address(0), new bytes(65), new uint256[](5));
+
+        LibContext.hash1(signedContexts_);
     }
+
+    function testFuzzHash0() public {
+        SignedContext[] memory signedContexts_ = new SignedContext[](3);
+        signedContexts_[0] = SignedContext(address(0), new bytes(65), new uint256[](5));
+        signedContexts_[1] = SignedContext(address(0), new bytes(65), new uint256[](5));
+        signedContexts_[2] = SignedContext(address(0), new bytes(65), new uint256[](5));
+
+        LibContext.hash0(signedContexts_);
+    }
+
+    // function testFuzzHash1(SignedContext[] memory signedContexts_) public {
+    //     LibContext.hash1(signedContexts_);
+    // }
+
+    // function testFuzzHash0(SignedContext[] memory signedContexts_) public {
+    //     LibContext.hash0(signedContexts_);
+    // }
+
+    // function testHash0() public {
+    //     // @todo test this better.
+    //     assertEq(
+    //         bytes32(0x569e75fc77c1a856f6daaf9e69d8a9566ca34aa47f9133711ce065a571af0cfd),
+    //         LibContext.hash(new SignedContext[](0))
+    //     );
+    // }
 
     function testHash(uint256 foo_) public {
         assembly ("memory-safe") {
@@ -52,14 +78,6 @@ contract LibContextTest is Test {
         bytes memory bytes_ = abi.encode(context_);
         keccak256(bytes_);
     }
-
-    function testSignedContextGasFuzz(SignedContext memory context_) public {
-
-    }
-
-    // function testSignedContextGas(SignedContext memory context_) public {
-    //     keccak256(abi.encode(context_));
-    // }
 
     function testBuild0() public {
         // @todo test this better.

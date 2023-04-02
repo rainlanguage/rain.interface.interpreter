@@ -6,6 +6,9 @@ import "sol.lib.memory/LibUint256Array.sol";
 import {SignatureChecker} from "openzeppelin-contracts/contracts/utils/cryptography/SignatureChecker.sol";
 import {ECDSA} from "openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
 import "./IInterpreterCallerV1.sol";
+import "./LibHashNoAlloc.sol";
+
+bytes32 constant SIGNED_CONTEXT_ARRAY_BASE_HASH = keccak256("SIGNED_CONTEXT_ARRAY");
 
 /// Thrown when the ith signature from a list of signed contexts is invalid.
 error InvalidSignature(uint256 i);
@@ -42,15 +45,17 @@ library LibContext {
     }
 
     function hash(SignedContext memory signedContext_) internal pure returns (bytes32 hash_) {
-        uint256 signerOffset_ = SIGNED_CONTEXT_SIGNER_OFFSET;
-        uint256 signatureOffset_ = SIGNED_CONTEXT_SIGNATURE_OFFSET;
-        uint256 contextOffset_ = SIGNED_CONTEXT_CONTEXT_OFFSET;
+        // uint256 signerOffset_ = SIGNED_CONTEXT_SIGNER_OFFSET;
+        // uint256 signatureOffset_ = SIGNED_CONTEXT_SIGNATURE_OFFSET;
+        // uint256 contextOffset_ = SIGNED_CONTEXT_CONTEXT_OFFSET;
+        bytes32 signatureHash_ = LibHashNoAlloc.hash(signedContext_.signature);
+        bytes32 contextHash_ = LibHashNoAlloc.hash(signedContext_.context);
         assembly ("memory-safe") {
-            let signer_ := mload(add(signedContext_, signerOffset_))
-            let signature_ := mload(add(signedContext_, signatureOffset_))
-            let signatureHash_ := keccak256(add(signature_, 0x20), mload(signature_))
-            let context_ := mload(add(signedContext_, contextOffset_))
-            let contextHash_ := keccak256(add(context_, 0x20), mul(mload(context_), 0x20))
+            let signer_ := mload(signedContext_)
+            // let signature_ := mload(add(signedContext_, signatureOffset_))
+            // let signatureHash_ := keccak256(add(signature_, 0x20), mload(signature_))
+            // let context_ := mload(add(signedContext_, contextOffset_))
+            // let contextHash_ := keccak256(add(context_, 0x20), mul(mload(context_), 0x20))
             let memPtr_ := mload(0x40)
             mstore(memPtr_, signer_)
             mstore(add(memPtr_, 0x20), signatureHash_)
@@ -68,10 +73,23 @@ library LibContext {
     /// a different provenance later.
     /// @param signedContexts_ The list of signed contexts to hash over.
     /// @return The hash of the signed contexts.
-    function hash(SignedContext[] memory signedContexts_) internal pure returns (bytes32) {
+    function hash1(SignedContext[] memory signedContexts_) internal pure returns (bytes32) {
         // Note the use of abi.encode rather than abi.encodePacked here to guard
         // against potential issues due to multiple different inputs colliding
         // on a common encoded output.
+        // return keccak256(abi.encode(signedContexts_));
+
+        unchecked {
+            // bytes32 hash_ = SIGNED_CONTEXT_ARRAY_BASE_HASH;
+            uint256[] memory hashes_ = new uint256[](signedContexts_.length);
+            for (uint256 i_ = 0; i_ < signedContexts_.length; i_++) {
+                hashes_[i_] = uint256(hash(signedContexts_[i_]));
+            }
+            return LibHashNoAlloc.hash(hashes_);
+        }
+    }
+
+    function hash0(SignedContext[] memory signedContexts_) internal pure returns (bytes32) {
         return keccak256(abi.encode(signedContexts_));
     }
 

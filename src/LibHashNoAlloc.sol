@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: CAL
 pragma solidity ^0.8.18;
 
-type Hash is uint256;
-
 /// @title LibHashNoAlloc
 /// @notice When producing hashes of just about anything that isn't already bytes
 /// the common suggestions look something like `keccak256(abi.encode(...))` or
@@ -41,29 +39,38 @@ type Hash is uint256;
 /// checks often occur early in real world logic due to
 /// checks-effects-interactions, this is not an unreasonable assumption to call
 /// this kind of expansion "no alloc".
+///
+/// One problem is that the gas saving for trivial abi encoding,
+/// e.g. ~1-3 uint256 values, can be lost by the overhead of jumps and stack
+/// manipulation due to function calls.
+///
+/// ```
+/// struct Foo {
+///   uint256 a;
+///   address b;
+///   uint32 c;
+/// }
+/// ```
+/// The simplest way to hash `Foo` is to just hash it (crazy, i know!).
+///
+/// ```
+/// assembly ("memory-safe") {
+///   hash_ := keccak256(foo_, 0x60)
+/// }
+/// ```
+/// Every struct field is 0x20 bytes in memory so 3 fields = 0x60 bytes to hash
+/// always, with the exception of dynamic types. This costs about 70 gas vs.
+/// about 350 gas for an abi encoding based approach.
 library LibHashNoAlloc {
-    function hashNoAlloc(uint256 a_) internal pure returns (Hash hash_) {
+    function hash(bytes memory data_) internal pure returns (bytes32 hash_) {
         assembly ("memory-safe") {
-            mstore(0, a_)
-            hash_ := keccak256(0, 0x20)
+            hash_ := keccak256(add(data_, 0x20), mload(data_))
         }
     }
 
-    function hashNoAlloc(uint256 a_, uint256 b_) internal pure returns (Hash hash_) {
+    function hash(uint256[] memory array_) internal pure returns (bytes32 hash_) {
         assembly ("memory-safe") {
-            mstore(0, a_)
-            mstore(0x20, b_)
-            hash_ := keccak256(0, 0x40)
-        }
-    }
-
-    function hashNoAlloc(uint256 a_, uint256 b_, uint256 c_) internal pure returns (Hash hash_) {
-        assembly ("memory-safe") {
-            let ptr_ := mload(0x40)
-            mstore(ptr_, a_)
-            mstore(add(ptr_, 0x20), b_)
-            mstore(add(ptr_, 0x40), c_)
-            hash_ := keccak256(ptr_, 0x60)
+            hash_ := keccak256(add(array_, 0x20), mul(mload(array_), 0x20))
         }
     }
 }
