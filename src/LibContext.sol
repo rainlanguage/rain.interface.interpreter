@@ -46,19 +46,22 @@ library LibContext {
         uint256 signerOffset_ = SIGNED_CONTEXT_SIGNER_OFFSET;
         uint256 signatureOffset_ = SIGNED_CONTEXT_SIGNATURE_OFFSET;
         uint256 contextOffset_ = SIGNED_CONTEXT_CONTEXT_OFFSET;
-        // bytes32 signatureHash_ = LibHashNoAlloc.hash(signedContext_.signature);
-        // bytes32 contextHash_ = LibHashNoAlloc.hash(signedContext_.context);
+
         assembly ("memory-safe") {
-            let signer_ := mload(signedContext_)
-            let signature_ := mload(add(signedContext_, signatureOffset_))
-            let signatureHash_ := keccak256(add(signature_, 0x20), mload(signature_))
+            mstore(0, keccak256(signedContext_, 0x20))
+
             let context_ := mload(add(signedContext_, contextOffset_))
-            let contextHash_ := keccak256(add(context_, 0x20), mul(mload(context_), 0x20))
-            let memPtr_ := mload(0x40)
-            mstore(memPtr_, signer_)
-            mstore(add(memPtr_, 0x20), signatureHash_)
-            mstore(add(memPtr_, 0x40), contextHash_)
-            hash_ := keccak256(memPtr_, 0x60)
+            mstore(
+                0x20,
+                keccak256(add(context_, 0x20), mul(mload(context_), 0x20))
+            )
+
+            mstore(0, keccak256(0, 0x40))
+
+            let signature_ := mload(add(signedContext_, signatureOffset_))
+            mstore(0x20, keccak256(add(signature_, 0x20), mload(signature_)))
+
+            hash_ := keccak256(0, 0x40)
         }
     }
 
@@ -70,7 +73,7 @@ library LibContext {
     /// signature, to ensure that some data cannot be re-signed and used under
     /// a different provenance later.
     /// @param signedContexts_ The list of signed contexts to hash over.
-    /// @return The hash of the signed contexts.
+    /// @return hash_ The hash of the signed contexts.
     function hash(SignedContext[] memory signedContexts_) internal pure returns (bytes32 hash_) {
         unchecked {
             uint256 cursor_;
