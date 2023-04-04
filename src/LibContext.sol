@@ -8,8 +8,6 @@ import {ECDSA} from "openzeppelin-contracts/contracts/utils/cryptography/ECDSA.s
 import "./IInterpreterCallerV1.sol";
 import "./LibHashNoAlloc.sol";
 
-bytes32 constant SIGNED_CONTEXT_ARRAY_BASE_HASH = keccak256("SIGNED_CONTEXT_ARRAY");
-
 /// Thrown when the ith signature from a list of signed contexts is invalid.
 error InvalidSignature(uint256 i);
 
