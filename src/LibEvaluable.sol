@@ -4,7 +4,6 @@ pragma solidity ^0.8.18;
 import "./IExpressionDeployerV1.sol";
 import "./IInterpreterStoreV1.sol";
 import "./IInterpreterV1.sol";
-import "./LibHashNoAlloc.sol";
 
 /// Standard struct that can be embedded in ABIs in a consistent format for
 /// tooling to read/write. MAY be useful to bundle up the data required to call
