@@ -23,22 +23,24 @@ pragma solidity ^0.8.18;
 /// onchain they CAN BE REVOKED AT ANY MOMENT as the smart contract can simply
 /// return `false` when it previously returned `true`.
 ///
+/// @param context The signed data in a format that can be merged into a
+/// 2-dimensional context matrix as-is.
 /// @param signer The account that produced the signature for `context`. The
 /// calling contract MUST authenticate that the signer produced the signature.
 /// @param signature The cryptographic signature for `context`. The calling
 /// contract MUST authenticate that the signature is valid for the `signer` and
 /// `context`.
-/// @param context The signed data in a format that can be merged into a
-/// 2-dimensional context matrix as-is.
 struct SignedContext {
+    // The ordering of these fields is important and used in assembly offset
+    // calculations.
+    uint256[] context;
     address signer;
     bytes signature;
-    uint256[] context;
 }
 
-uint256 constant SIGNED_CONTEXT_SIGNER_OFFSET = 0;
-uint256 constant SIGNED_CONTEXT_SIGNATURE_OFFSET = 0x20;
-uint256 constant SIGNED_CONTEXT_CONTEXT_OFFSET = 0x40;
+uint256 constant SIGNED_CONTEXT_CONTEXT_OFFSET = 0;
+uint256 constant SIGNED_CONTEXT_SIGNER_OFFSET = 0x20;
+uint256 constant SIGNED_CONTEXT_SIGNATURE_OFFSET = 0x40;
 
 /// @title IInterpreterCallerV1
 /// @notice A contract that calls an `IInterpreterV1` via. `eval`. There are near

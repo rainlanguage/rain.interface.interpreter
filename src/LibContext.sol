@@ -73,24 +73,37 @@ library LibContext {
     /// a different provenance later.
     /// @param signedContexts_ The list of signed contexts to hash over.
     /// @return The hash of the signed contexts.
-    function hash1(SignedContext[] memory signedContexts_) internal pure returns (bytes32) {
+    function hash(SignedContext[] memory signedContexts_) internal pure returns (bytes32) {
         // Note the use of abi.encode rather than abi.encodePacked here to guard
         // against potential issues due to multiple different inputs colliding
         // on a common encoded output.
         // return keccak256(abi.encode(signedContexts_));
 
         unchecked {
-            // bytes32 hash_ = SIGNED_CONTEXT_ARRAY_BASE_HASH;
-            uint256[] memory hashes_ = new uint256[](signedContexts_.length);
-            for (uint256 i_ = 0; i_ < signedContexts_.length; i_++) {
-                hashes_[i_] = uint256(hash(signedContexts_[i_]));
+            uint256 cursor_;
+            uint256 end_;
+            assembly ("memory-safe") {
+                cursor_ := add(signedContexts_, 0x20)
+                end_ := add(cursor_, mul(mload(signedContexts_), 0x20))
+                mstore(0, 0)
             }
-            return LibHashNoAlloc.hash(hashes_);
-        }
-    }
 
-    function hash0(SignedContext[] memory signedContexts_) internal pure returns (bytes32) {
-        return keccak256(abi.encode(signedContexts_));
+            SignedContext memory context_;
+            while (cursor_ < end_) {
+                assembly ("memory-safe") {
+                    context_ := mload(cursor_)
+                }
+                bytes32 subHash_ = hash(context_);
+                assembly ("memory-safe") {
+                    mstore(0x20, subHash_)
+                    mstore(0, keccak256(0, 0x40))
+                    cursor_ := add(cursor_, 0x20)
+                }
+            }
+            assembly ("memory-safe") {
+                hash_ := mload(0)
+            }
+        }
     }
 
     /// Builds a standard 2-dimensional context array from base, calling and
