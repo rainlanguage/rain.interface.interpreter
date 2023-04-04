@@ -38,6 +38,13 @@ contract LibContextHashTest is Test {
         );
     }
 
+    function testSignedContextArrayHashReferenceImplementation(SignedContext[] memory signedContexts_) public {
+        assertEq(
+            LibContext.hash(signedContexts_),
+            LibContextSlow.hashSlow(signedContexts_)
+        );
+    }
+
     function testSignedContextHashGas0() public {
         SignedContext memory context_ = SignedContext(address(0), new uint256[](5), new bytes(65));
         LibContext.hash(context_);

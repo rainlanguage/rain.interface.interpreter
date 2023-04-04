@@ -12,8 +12,8 @@ library LibContextSlow {
     using LibCast for uint256[];
 
     function hashSlow(SignedContext memory signedContext_) internal pure returns (bytes32) {
-        bytes32 a_ = LibHashNoAlloc.hashWords(uint256(uint160(signedContext_.signer)).arrayFrom().asBytes32());
-        bytes32 b_ = LibHashNoAlloc.hashWords(signedContext_.context.asBytes32());
+        bytes32 a_ = LibHashNoAlloc.hashWords(uint256(uint160(signedContext_.signer)).arrayFrom().asBytes32Array());
+        bytes32 b_ = LibHashNoAlloc.hashWords(signedContext_.context.asBytes32Array());
         bytes32 c_ = LibHashNoAlloc.combineHashes(a_, b_);
         bytes32 d_ = LibHashNoAlloc.hashBytes(signedContext_.signature);
         bytes32 e_ = LibHashNoAlloc.combineHashes(c_, d_);
@@ -23,7 +23,7 @@ library LibContextSlow {
     function hashSlow(SignedContext[] memory signedContext_) internal pure returns (bytes32) {
         bytes32 hash_ = HASH_NIL;
 
-        for (uint256 i_ = 0; i_ < signedContext_; i_++) {
+        for (uint256 i_ = 0; i_ < signedContext_.length; i_++) {
             hash_ = LibHashNoAlloc.combineHashes(hash_, hashSlow(signedContext_));
         }
 

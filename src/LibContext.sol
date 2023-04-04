@@ -2,6 +2,7 @@
 pragma solidity ^0.8.18;
 
 import "sol.lib.memory/LibUint256Array.sol";
+import "rain.lib.hash/LibHashNoAlloc.sol";
 
 import {SignatureChecker} from "openzeppelin-contracts/contracts/utils/cryptography/SignatureChecker.sol";
 import {ECDSA} from "openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
@@ -44,11 +45,11 @@ library LibContext {
 
     function hash(SignedContext memory signedContext_) internal pure returns (bytes32 hash_) {
         uint256 signerOffset_ = SIGNED_CONTEXT_SIGNER_OFFSET;
-        uint256 signatureOffset_ = SIGNED_CONTEXT_SIGNATURE_OFFSET;
         uint256 contextOffset_ = SIGNED_CONTEXT_CONTEXT_OFFSET;
+        uint256 signatureOffset_ = SIGNED_CONTEXT_SIGNATURE_OFFSET;
 
         assembly ("memory-safe") {
-            mstore(0, keccak256(signedContext_, 0x20))
+            mstore(0, keccak256(add(signedContext_, signerOffset_), 0x20))
 
             let context_ := mload(add(signedContext_, contextOffset_))
             mstore(
@@ -78,18 +79,19 @@ library LibContext {
         unchecked {
             uint256 cursor_;
             uint256 end_;
+            bytes32 hashNil_ = HASH_NIL;
             assembly ("memory-safe") {
                 cursor_ := add(signedContexts_, 0x20)
                 end_ := add(cursor_, mul(mload(signedContexts_), 0x20))
-                mstore(0, 0)
+                mstore(0, hashNil_)
             }
 
-            SignedContext memory context_;
+            SignedContext memory signedContext_;
             while (cursor_ < end_) {
                 assembly ("memory-safe") {
-                    context_ := mload(cursor_)
+                    signedContext_ := mload(cursor_)
                 }
-                bytes32 subHash_ = hash(context_);
+                bytes32 subHash_ = hash(signedContext_);
                 assembly ("memory-safe") {
                     mstore(0x20, subHash_)
                     mstore(0, keccak256(0, 0x40))
