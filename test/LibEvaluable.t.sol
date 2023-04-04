@@ -61,7 +61,9 @@ contract LibEvaluableTest is Test {
     }
 
     function testEvaluableHashGasPacked() public {
-        LibEvaluableSlow.hashEncodePacked(Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0)));
+        LibEvaluableSlow.hashEncodePacked(
+            Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0))
+        );
     }
 
     function testEvaluableHashGasNotPacked() public pure {

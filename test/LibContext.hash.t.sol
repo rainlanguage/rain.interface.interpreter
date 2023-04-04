@@ -32,17 +32,11 @@ contract LibContextHashTest is Test {
     }
 
     function testSignedContextHashReferenceImplementation(SignedContext memory signedContext_) public {
-        assertEq(
-            LibContext.hash(signedContext_),
-            LibContextSlow.hashSlow(signedContext_)
-        );
+        assertEq(LibContext.hash(signedContext_), LibContextSlow.hashSlow(signedContext_));
     }
 
     function testSignedContextArrayHashReferenceImplementation(SignedContext[] memory signedContexts_) public {
-        assertEq(
-            LibContext.hash(signedContexts_),
-            LibContextSlow.hashSlow(signedContexts_)
-        );
+        assertEq(LibContext.hash(signedContexts_), LibContextSlow.hashSlow(signedContexts_));
     }
 
     function testSignedContextHashGas0() public {

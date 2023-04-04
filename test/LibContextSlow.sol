@@ -20,11 +20,11 @@ library LibContextSlow {
         return e_;
     }
 
-    function hashSlow(SignedContext[] memory signedContext_) internal pure returns (bytes32) {
+    function hashSlow(SignedContext[] memory signedContexts_) internal pure returns (bytes32) {
         bytes32 hash_ = HASH_NIL;
 
-        for (uint256 i_ = 0; i_ < signedContext_.length; i_++) {
-            hash_ = LibHashNoAlloc.combineHashes(hash_, hashSlow(signedContext_));
+        for (uint256 i_ = 0; i_ < signedContexts_.length; i_++) {
+            hash_ = LibHashNoAlloc.combineHashes(hash_, hashSlow(signedContexts_[i_]));
         }
 
         return hash_;

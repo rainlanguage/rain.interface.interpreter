@@ -52,10 +52,7 @@ library LibContext {
             mstore(0, keccak256(add(signedContext_, signerOffset_), 0x20))
 
             let context_ := mload(add(signedContext_, contextOffset_))
-            mstore(
-                0x20,
-                keccak256(add(context_, 0x20), mul(mload(context_), 0x20))
-            )
+            mstore(0x20, keccak256(add(context_, 0x20), mul(mload(context_), 0x20)))
 
             mstore(0, keccak256(0, 0x40))
 
@@ -76,31 +73,29 @@ library LibContext {
     /// @param signedContexts_ The list of signed contexts to hash over.
     /// @return hash_ The hash of the signed contexts.
     function hash(SignedContext[] memory signedContexts_) internal pure returns (bytes32 hash_) {
-        unchecked {
-            uint256 cursor_;
-            uint256 end_;
-            bytes32 hashNil_ = HASH_NIL;
-            assembly ("memory-safe") {
-                cursor_ := add(signedContexts_, 0x20)
-                end_ := add(cursor_, mul(mload(signedContexts_), 0x20))
-                mstore(0, hashNil_)
-            }
+        uint256 cursor_;
+        uint256 end_;
+        bytes32 hashNil_ = HASH_NIL;
+        assembly ("memory-safe") {
+            cursor_ := add(signedContexts_, 0x20)
+            end_ := add(cursor_, mul(mload(signedContexts_), 0x20))
+            mstore(0, hashNil_)
+        }
 
-            SignedContext memory signedContext_;
-            while (cursor_ < end_) {
-                assembly ("memory-safe") {
-                    signedContext_ := mload(cursor_)
-                }
-                bytes32 subHash_ = hash(signedContext_);
-                assembly ("memory-safe") {
-                    mstore(0x20, subHash_)
-                    mstore(0, keccak256(0, 0x40))
-                    cursor_ := add(cursor_, 0x20)
-                }
-            }
+        SignedContext memory signedContext_;
+        while (cursor_ < end_) {
             assembly ("memory-safe") {
-                hash_ := mload(0)
+                signedContext_ := mload(cursor_)
             }
+            bytes32 subHash_ = hash(signedContext_);
+            assembly ("memory-safe") {
+                mstore(0x20, subHash_)
+                mstore(0, keccak256(0, 0x40))
+                cursor_ := add(cursor_, 0x20)
+            }
+        }
+        assembly ("memory-safe") {
+            hash_ := mload(0)
         }
     }
 
