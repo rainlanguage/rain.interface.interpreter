@@ -187,7 +187,7 @@ library LibContext {
                         // a single encoded output.
                         !SignatureChecker.isValidSignatureNow(
                             signedContexts_[i_].signer,
-                            ECDSA.toEthSignedMessageHash(keccak256(abi.encodePacked(signedContexts_[i_].context))),
+                            ECDSA.toEthSignedMessageHash(LibHashNoAlloc.hashWords(signedContexts_[i_].context)),
                             signedContexts_[i_].signature
                         )
                     ) {

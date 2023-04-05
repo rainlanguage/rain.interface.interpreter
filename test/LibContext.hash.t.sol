@@ -35,10 +35,6 @@ contract LibContextHashTest is Test {
         assertEq(LibContext.hash(signedContext_), LibContextSlow.hashSlow(signedContext_));
     }
 
-    function testSignedContextArrayHashReferenceImplementation(SignedContext[] memory signedContexts_) public {
-        assertEq(LibContext.hash(signedContexts_), LibContextSlow.hashSlow(signedContexts_));
-    }
-
     function testSignedContextArrayHashReferenceImplementation0() public {
         SignedContext[] memory signedContexts_ = new SignedContext[](1);
         signedContexts_[0] = SignedContext(address(0), new uint256[](0), "");
@@ -58,5 +54,11 @@ contract LibContextHashTest is Test {
         // 1199 gas
         bytes memory bytes_ = abi.encode(context_);
         keccak256(bytes_);
+    }
+
+    /// This is very slow ~10-15s due to the fuzzer taking a long time to produce
+    /// the input data for some reason.
+    function testSignedContextArrayHashReferenceImplementation(SignedContext[] memory signedContexts_) public {
+        assertEq(LibContext.hash(signedContexts_), LibContextSlow.hashSlow(signedContexts_));
     }
 }
