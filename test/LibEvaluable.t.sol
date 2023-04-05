@@ -56,19 +56,17 @@ contract LibEvaluableTest is Test {
         assertEq(hash0_, hash1_);
     }
 
-    function testEvaluableHashGas0() public {
+    function testEvaluableHashGas0() public pure {
         Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0)).hash();
     }
 
-    function testEvaluableHashGasPacked() public {
-        LibEvaluableSlow.hashEncodePacked(
+    function testEvaluableHashGasSlow0() public pure {
+        LibEvaluableSlow.hashSlow(
             Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0))
         );
     }
 
-    function testEvaluableHashGasNotPacked() public pure {
-        LibEvaluableSlow.hashEncodeNotPacked(
-            Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0))
-        );
+    function testEvaluableReferenceImplementation(Evaluable memory evaluable_) public {
+        assertEq(LibEvaluable.hash(evaluable_), LibEvaluableSlow.hashSlow(evaluable_));
     }
 }

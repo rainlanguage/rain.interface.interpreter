@@ -28,4 +28,8 @@ contract LibContextTest is Test {
             assertEq(expected_[i_], built_[i_]);
         }
     }
+
+    function testBuildGas0() public view {
+        LibContext.build(new uint256[][](0), new uint256[](0), new SignedContext[](0));
+    }
 }
