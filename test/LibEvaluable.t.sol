@@ -61,9 +61,7 @@ contract LibEvaluableTest is Test {
     }
 
     function testEvaluableHashGasSlow0() public pure {
-        LibEvaluableSlow.hashSlow(
-            Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0))
-        );
+        LibEvaluableSlow.hashSlow(Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0)));
     }
 
     function testEvaluableReferenceImplementation(Evaluable memory evaluable_) public {
