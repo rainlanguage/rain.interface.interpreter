@@ -83,17 +83,17 @@ library LibContext {
         }
 
         SignedContext memory signedContext_;
-        bytes32 mem0;
+        bytes32 mem0_;
         while (cursor_ < end_) {
             assembly ("memory-safe") {
                 signedContext_ := mload(cursor_)
                 // Subhash will write to 0 for its own hashing so keep a copy
                 // before it gets overwritten.
-                mem0 := mload(0)
+                mem0_ := mload(0)
             }
             bytes32 subHash_ = hash(signedContext_);
             assembly ("memory-safe") {
-                mstore(0, mem0)
+                mstore(0, mem0_)
                 mstore(0x20, subHash_)
                 mstore(0, keccak256(0, 0x40))
                 cursor_ := add(cursor_, 0x20)
