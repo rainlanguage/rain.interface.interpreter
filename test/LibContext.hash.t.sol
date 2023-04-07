@@ -8,7 +8,7 @@ import "./LibContextSlow.sol";
 import "forge-std/console.sol";
 
 contract LibContextHashTest is Test {
-    function testFuzzHash0() public {
+    function testFuzzHash0() public pure {
         SignedContext[] memory signedContexts_ = new SignedContext[](3);
         signedContexts_[0] = SignedContext(address(0), new uint256[](5), new bytes(65));
         signedContexts_[1] = SignedContext(address(0), new uint256[](5), new bytes(65));
@@ -17,14 +17,14 @@ contract LibContextHashTest is Test {
         LibContext.hash(signedContexts_);
     }
 
-    function testHash(uint256 foo_) public {
+    function testHash(uint256 foo_) public pure {
         assembly ("memory-safe") {
             mstore(0x00, foo_)
             pop(keccak256(0x00, 0x20))
         }
     }
 
-    function testHashGas0() public {
+    function testHashGas0() public pure {
         assembly ("memory-safe") {
             mstore(0, 0)
             pop(keccak256(0, 0x20))
@@ -41,7 +41,7 @@ contract LibContextHashTest is Test {
         assertEq(LibContext.hash(signedContexts_), LibContextSlow.hashSlow(signedContexts_));
     }
 
-    function testSignedContextHashGas0() public {
+    function testSignedContextHashGas0() public pure {
         SignedContext memory context_ = SignedContext(address(0), new uint256[](5), new bytes(65));
         LibContext.hash(context_);
         // 1199 gas
@@ -49,7 +49,7 @@ contract LibContextHashTest is Test {
         // keccak256(bytes_);
     }
 
-    function testSignedContextHashEncodeGas0() public {
+    function testSignedContextHashEncodeGas0() public pure {
         SignedContext memory context_ = SignedContext(address(0), new uint256[](5), new bytes(65));
         // 1199 gas
         bytes memory bytes_ = abi.encode(context_);
