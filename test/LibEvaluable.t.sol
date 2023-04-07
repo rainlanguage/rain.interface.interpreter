@@ -40,15 +40,31 @@ contract LibEvaluableTest is Test {
         // Check match.
         c_ = Evaluable(a_.interpreter, a_.store, a_.expression);
         assertEq(a_.hash(), c_.hash());
+
+        // Check hash doesn't include extraneous data
+        uint256 v0_ = type(uint256).max;
+        uint256 v1_ = 0;
+        Evaluable memory d_ = Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0));
+        assembly {
+            mstore(mload(0x40), v0_)
+        }
+        bytes32 hash0_ = d_.hash();
+        assembly {
+            mstore(mload(0x40), v1_)
+        }
+        bytes32 hash1_ = d_.hash();
+        assertEq(hash0_, hash1_);
     }
 
-    function testHashGas0() public pure {
+    function testEvaluableHashGas0() public pure {
         Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0)).hash();
     }
 
-    function testHashGasSlow0() public pure {
-        LibEvaluableSlow.hashEncodeNotPacked(
-            Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0))
-        );
+    function testEvaluableHashGasSlow0() public pure {
+        LibEvaluableSlow.hashSlow(Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0)));
+    }
+
+    function testEvaluableReferenceImplementation(Evaluable memory evaluable_) public {
+        assertEq(LibEvaluable.hash(evaluable_), LibEvaluableSlow.hashSlow(evaluable_));
     }
 }

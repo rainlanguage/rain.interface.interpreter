@@ -37,12 +37,14 @@ library LibEvaluable {
     /// Hashes an `Evaluable`, ostensibly so that only the hash need be stored,
     /// thus only storing a single `uint256` instead of 3x `uint160`.
     /// @param evaluable_ The evaluable to hash.
-    /// @return Standard hash of the evaluable.
-    function hash(Evaluable memory evaluable_) internal pure returns (bytes32) {
+    /// @return hash_ Standard hash of the evaluable.
+    function hash(Evaluable memory evaluable_) internal pure returns (bytes32 hash_) {
         // `Evaluable` does NOT contain any dynamic types so it is safe to encode
         // packed for hashing, and is preferable due to the smaller/simpler
         // in-memory structure. It also makes it easier to replicate the logic
         // offchain as a simple concatenation of bytes.
-        return keccak256(abi.encodePacked(evaluable_.interpreter, evaluable_.store, evaluable_.expression));
+        assembly ("memory-safe") {
+            hash_ := keccak256(evaluable_, 0x60)
+        }
     }
 }

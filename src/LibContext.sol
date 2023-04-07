@@ -2,9 +2,11 @@
 pragma solidity ^0.8.18;
 
 import "sol.lib.memory/LibUint256Array.sol";
+import "rain.lib.hash/LibHashNoAlloc.sol";
 
 import {SignatureChecker} from "openzeppelin-contracts/contracts/utils/cryptography/SignatureChecker.sol";
 import {ECDSA} from "openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
+
 import "./IInterpreterCallerV1.sol";
 
 /// Thrown when the ith signature from a list of signed contexts is invalid.
@@ -41,6 +43,26 @@ library LibContext {
         return LibUint256Array.arrayFrom(uint256(uint160(msg.sender)), uint256(uint160(address(this))));
     }
 
+    function hash(SignedContext memory signedContext_) internal pure returns (bytes32 hash_) {
+        uint256 signerOffset_ = SIGNED_CONTEXT_SIGNER_OFFSET;
+        uint256 contextOffset_ = SIGNED_CONTEXT_CONTEXT_OFFSET;
+        uint256 signatureOffset_ = SIGNED_CONTEXT_SIGNATURE_OFFSET;
+
+        assembly ("memory-safe") {
+            mstore(0, keccak256(add(signedContext_, signerOffset_), 0x20))
+
+            let context_ := mload(add(signedContext_, contextOffset_))
+            mstore(0x20, keccak256(add(context_, 0x20), mul(mload(context_), 0x20)))
+
+            mstore(0, keccak256(0, 0x40))
+
+            let signature_ := mload(add(signedContext_, signatureOffset_))
+            mstore(0x20, keccak256(add(signature_, 0x20), mload(signature_)))
+
+            hash_ := keccak256(0, 0x40)
+        }
+    }
+
     /// Standard hashing process over a list of signed contexts. Situationally
     /// useful if the calling contract wants to record that it has seen a set of
     /// signed data then later compare it against some input (e.g. to ensure that
@@ -49,12 +71,37 @@ library LibContext {
     /// signature, to ensure that some data cannot be re-signed and used under
     /// a different provenance later.
     /// @param signedContexts_ The list of signed contexts to hash over.
-    /// @return The hash of the signed contexts.
-    function hash(SignedContext[] memory signedContexts_) internal pure returns (bytes32) {
-        // Note the use of abi.encode rather than abi.encodePacked here to guard
-        // against potential issues due to multiple different inputs colliding
-        // on a common encoded output.
-        return keccak256(abi.encode(signedContexts_));
+    /// @return hash_ The hash of the signed contexts.
+    function hash(SignedContext[] memory signedContexts_) internal pure returns (bytes32 hash_) {
+        uint256 cursor_;
+        uint256 end_;
+        bytes32 hashNil_ = HASH_NIL;
+        assembly ("memory-safe") {
+            cursor_ := add(signedContexts_, 0x20)
+            end_ := add(cursor_, mul(mload(signedContexts_), 0x20))
+            mstore(0, hashNil_)
+        }
+
+        SignedContext memory signedContext_;
+        bytes32 mem0_;
+        while (cursor_ < end_) {
+            assembly ("memory-safe") {
+                signedContext_ := mload(cursor_)
+                // Subhash will write to 0 for its own hashing so keep a copy
+                // before it gets overwritten.
+                mem0_ := mload(0)
+            }
+            bytes32 subHash_ = hash(signedContext_);
+            assembly ("memory-safe") {
+                mstore(0, mem0_)
+                mstore(0x20, subHash_)
+                mstore(0, keccak256(0, 0x40))
+                cursor_ := add(cursor_, 0x20)
+            }
+        }
+        assembly ("memory-safe") {
+            hash_ := mload(0)
+        }
     }
 
     /// Builds a standard 2-dimensional context array from base, calling and
@@ -140,7 +187,7 @@ library LibContext {
                         // a single encoded output.
                         !SignatureChecker.isValidSignatureNow(
                             signedContexts_[i_].signer,
-                            ECDSA.toEthSignedMessageHash(keccak256(abi.encodePacked(signedContexts_[i_].context))),
+                            ECDSA.toEthSignedMessageHash(LibHashNoAlloc.hashWords(signedContexts_[i_].context)),
                             signedContexts_[i_].signature
                         )
                     ) {
