@@ -108,23 +108,13 @@ library LibContext {
     /// signed contexts. Note that "columns" of a context array refer to each
     /// `uint256[]` and each item within a `uint256[]` is a "row".
     ///
-    /// @param baseContext_ Anything the calling contract can provide without
-    /// input from the `msg.sender`. More strictly the `msg.sender` MUST NOT be
-    /// able to directly modify any of these values, although the values MAY be
-    /// derived from user activity broadly, such as current vault balances after
-    /// a series of deposits and withdrawals. The default base context from
-    /// `LibContext.base()` DOES NOT need to be provided by the caller, this
-    /// matrix MAY be empty and will be simply merged into the final context. The
-    /// base context matrix MUST contain a consistent number of columns from the
-    /// calling contract so that the expression can always predict how many
-    /// columns there will be when it runs.
-    /// @param callingContext_ Calling context is provided by the `msg.sender`
-    /// and so should be treated as self-signed data. As an attestation/proof of
-    /// some external event or state it is highly suspect, but as an indicator
-    /// of the intent of `msg.sender` it may be treated as gospel. Calling
-    /// context MAY be empty but a zero length column will still be reserved in
-    /// the final built context. This ensures that expressions can always
-    /// predict how many columns there will be when they run.
+    /// @param baseContext_ Anything the calling contract can provide which MAY
+    /// include input from the `msg.sender` of the calling contract. The default
+    /// base context from `LibContext.base()` DOES NOT need to be provided by the
+    /// caller, this matrix MAY be empty and will be simply merged into the final
+    /// context. The base context matrix MUST contain a consistent number of
+    /// columns from the calling contract so that the expression can always
+    /// predict how many unsigned columns there will be when it runs.
     /// @param signedContexts_ Signed contexts are provided by the `msg.sender`
     /// but signed by a third party. The expression (author) defines _who_ may
     /// sign and the calling contract authenticates the signature over the
@@ -140,19 +130,18 @@ library LibContext {
     /// position that would force signed context to be provided in the "correct"
     /// order, rather than relying on the `msg.sender` to honestly present data
     /// in any particular structure/order.
-    function build(
-        uint256[][] memory baseContext_,
-        uint256[] memory callingContext_,
-        SignedContext[] memory signedContexts_
-    ) internal view returns (uint256[][] memory) {
+    function build(uint256[][] memory baseContext_, SignedContext[] memory signedContexts_)
+        internal
+        view
+        returns (uint256[][] memory)
+    {
         unchecked {
             uint256[] memory signers_ = new uint256[](signedContexts_.length);
 
             // - LibContext.base() + whatever we are provided.
-            // - calling context always even if empty
             // - signed contexts + signers if they exist else nothing.
             uint256 contextLength_ =
-                1 + baseContext_.length + 1 + (signedContexts_.length > 0 ? signedContexts_.length + 1 : 0);
+                1 + baseContext_.length + (signedContexts_.length > 0 ? signedContexts_.length + 1 : 0);
 
             uint256[][] memory context_ = new uint256[][](contextLength_);
             uint256 offset_ = 0;
@@ -162,13 +151,6 @@ library LibContext {
                 offset_++;
                 context_[offset_] = baseContext_[i_];
             }
-
-            // Calling context is added unconditionally so that a 0 length array
-            // is simply an empty column. We don't want callers to be able to
-            // manipulate the overall structure of context columns that the
-            // expression indexes into.
-            offset_++;
-            context_[offset_] = callingContext_;
 
             if (signedContexts_.length > 0) {
                 offset_++;

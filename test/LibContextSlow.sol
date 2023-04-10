@@ -29,4 +29,29 @@ library LibContextSlow {
 
         return hash_;
     }
+
+    function buildStructureSlow(uint256[][] memory baseContext_, SignedContext[] memory signedContexts_)
+        internal
+        view
+        returns (uint256[][] memory)
+    {
+        uint256[][] memory context_ = new uint256[][](1 + baseContext_.length + signedContexts_.length);
+        context_[0] = new uint256[](2);
+        context_[0][0] = uint256(uint160(address(msg.sender)));
+        context_[0][1] = uint256(uint160(address(this)));
+
+        uint256 offset_ = 1;
+        uint256 i_ = 0;
+        for (; i_ < baseContext_.length; i_++) {
+            context_[i_ + offset_] = baseContext_[i_];
+        }
+        offset_ = offset_ + i_;
+
+        i_ = 0;
+        for (; i_ < signedContexts_.length; i_++) {
+            context_[i_ + offset_] = signedContexts_[i_].context;
+        }
+
+        return context_;
+    }
 }
