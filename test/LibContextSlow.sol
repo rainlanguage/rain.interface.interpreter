@@ -5,13 +5,13 @@ import "rain.lib.hash/LibHashNoAlloc.sol";
 import "rain.lib.typecast/LibCast.sol";
 import "sol.lib.memory/LibUint256Array.sol";
 
-import "../src/IInterpreterCallerV1.sol";
+import "../src/IInterpreterCallerV2.sol";
 
 library LibContextSlow {
     using LibUint256Array for uint256;
     using LibCast for uint256[];
 
-    function hashSlow(SignedContext memory signedContext_) internal pure returns (bytes32) {
+    function hashSlow(SignedContextV1 memory signedContext_) internal pure returns (bytes32) {
         bytes32 a_ = LibHashNoAlloc.hashWords(uint256(uint160(signedContext_.signer)).arrayFrom().asBytes32Array());
         bytes32 b_ = LibHashNoAlloc.hashWords(signedContext_.context.asBytes32Array());
         bytes32 c_ = LibHashNoAlloc.combineHashes(a_, b_);
@@ -20,7 +20,7 @@ library LibContextSlow {
         return e_;
     }
 
-    function hashSlow(SignedContext[] memory signedContexts_) internal pure returns (bytes32) {
+    function hashSlow(SignedContextV1[] memory signedContexts_) internal pure returns (bytes32) {
         bytes32 hash_ = HASH_NIL;
 
         for (uint256 i_ = 0; i_ < signedContexts_.length; i_++) {
@@ -30,7 +30,7 @@ library LibContextSlow {
         return hash_;
     }
 
-    function buildStructureSlow(uint256[][] memory baseContext_, SignedContext[] memory signedContexts_)
+    function buildStructureSlow(uint256[][] memory baseContext_, SignedContextV1[] memory signedContexts_)
         internal
         view
         returns (uint256[][] memory)

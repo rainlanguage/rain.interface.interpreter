@@ -9,10 +9,10 @@ import "forge-std/console.sol";
 
 contract LibContextHashTest is Test {
     function testFuzzHash0() public pure {
-        SignedContext[] memory signedContexts_ = new SignedContext[](3);
-        signedContexts_[0] = SignedContext(address(0), new uint256[](5), new bytes(65));
-        signedContexts_[1] = SignedContext(address(0), new uint256[](5), new bytes(65));
-        signedContexts_[2] = SignedContext(address(0), new uint256[](5), new bytes(65));
+        SignedContextV1[] memory signedContexts_ = new SignedContextV1[](3);
+        signedContexts_[0] = SignedContextV1(address(0), new uint256[](5), new bytes(65));
+        signedContexts_[1] = SignedContextV1(address(0), new uint256[](5), new bytes(65));
+        signedContexts_[2] = SignedContextV1(address(0), new uint256[](5), new bytes(65));
 
         LibContext.hash(signedContexts_);
     }
@@ -31,18 +31,18 @@ contract LibContextHashTest is Test {
         }
     }
 
-    function testSignedContextHashReferenceImplementation(SignedContext memory signedContext_) public {
+    function testSignedContextHashReferenceImplementation(SignedContextV1 memory signedContext_) public {
         assertEq(LibContext.hash(signedContext_), LibContextSlow.hashSlow(signedContext_));
     }
 
     function testSignedContextArrayHashReferenceImplementation0() public {
-        SignedContext[] memory signedContexts_ = new SignedContext[](1);
-        signedContexts_[0] = SignedContext(address(0), new uint256[](0), "");
+        SignedContextV1[] memory signedContexts_ = new SignedContextV1[](1);
+        signedContexts_[0] = SignedContextV1(address(0), new uint256[](0), "");
         assertEq(LibContext.hash(signedContexts_), LibContextSlow.hashSlow(signedContexts_));
     }
 
     function testSignedContextHashGas0() public pure {
-        SignedContext memory context_ = SignedContext(address(0), new uint256[](5), new bytes(65));
+        SignedContextV1 memory context_ = SignedContextV1(address(0), new uint256[](5), new bytes(65));
         LibContext.hash(context_);
         // 1199 gas
         // bytes memory bytes_ = abi.encode(context_);
@@ -50,7 +50,7 @@ contract LibContextHashTest is Test {
     }
 
     function testSignedContextHashEncodeGas0() public pure {
-        SignedContext memory context_ = SignedContext(address(0), new uint256[](5), new bytes(65));
+        SignedContextV1 memory context_ = SignedContextV1(address(0), new uint256[](5), new bytes(65));
         // 1199 gas
         bytes memory bytes_ = abi.encode(context_);
         keccak256(bytes_);
@@ -58,7 +58,7 @@ contract LibContextHashTest is Test {
 
     /// This is very slow ~10-15s due to the fuzzer taking a long time to produce
     /// the input data for some reason.
-    function testSignedContextArrayHashReferenceImplementation(SignedContext[] memory signedContexts_) public {
+    function testSignedContextArrayHashReferenceImplementation(SignedContextV1[] memory signedContexts_) public {
         assertEq(LibContext.hash(signedContexts_), LibContextSlow.hashSlow(signedContexts_));
     }
 }
