@@ -30,7 +30,7 @@ pragma solidity ^0.8.18;
 /// @param signature The cryptographic signature for `context`. The calling
 /// contract MUST authenticate that the signature is valid for the `signer` and
 /// `context`.
-struct SignedContext {
+struct SignedContextV1 {
     // The ordering of these fields is important and used in assembly offset
     // calculations and hashing.
     address signer;
@@ -42,7 +42,7 @@ uint256 constant SIGNED_CONTEXT_SIGNER_OFFSET = 0;
 uint256 constant SIGNED_CONTEXT_CONTEXT_OFFSET = 0x20;
 uint256 constant SIGNED_CONTEXT_SIGNATURE_OFFSET = 0x40;
 
-/// @title IInterpreterCallerV1
+/// @title IInterpreterCallerV2
 /// @notice A contract that calls an `IInterpreterV1` via. `eval`. There are near
 /// zero requirements on a caller other than:
 ///
@@ -52,7 +52,7 @@ uint256 constant SIGNED_CONTEXT_SIGNATURE_OFFSET = 0x40;
 /// - Handle the stack array returned from `eval`
 /// - OPTIONALLY emit the `Context` event
 /// - OPTIONALLY set state on the `IInterpreterStoreV1` returned from eval.
-interface IInterpreterCallerV1 {
+interface IInterpreterCallerV2 {
     /// Calling contracts SHOULD emit `Context` before calling `eval` if they
     /// are able. Notably `eval` MAY be called within a static call which means
     /// that events cannot be emitted, in which case this does not apply. It MAY
