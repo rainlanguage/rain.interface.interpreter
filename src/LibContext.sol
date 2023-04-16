@@ -7,7 +7,7 @@ import "rain.lib.hash/LibHashNoAlloc.sol";
 import {SignatureChecker} from "openzeppelin-contracts/contracts/utils/cryptography/SignatureChecker.sol";
 import {ECDSA} from "openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol";
 
-import "./IInterpreterCallerV1.sol";
+import "./IInterpreterCallerV2.sol";
 
 /// Thrown when the ith signature from a list of signed contexts is invalid.
 error InvalidSignature(uint256 i);
@@ -43,7 +43,7 @@ library LibContext {
         return LibUint256Array.arrayFrom(uint256(uint160(msg.sender)), uint256(uint160(address(this))));
     }
 
-    function hash(SignedContext memory signedContext_) internal pure returns (bytes32 hash_) {
+    function hash(SignedContextV1 memory signedContext_) internal pure returns (bytes32 hash_) {
         uint256 signerOffset_ = SIGNED_CONTEXT_SIGNER_OFFSET;
         uint256 contextOffset_ = SIGNED_CONTEXT_CONTEXT_OFFSET;
         uint256 signatureOffset_ = SIGNED_CONTEXT_SIGNATURE_OFFSET;
@@ -72,7 +72,7 @@ library LibContext {
     /// a different provenance later.
     /// @param signedContexts_ The list of signed contexts to hash over.
     /// @return hash_ The hash of the signed contexts.
-    function hash(SignedContext[] memory signedContexts_) internal pure returns (bytes32 hash_) {
+    function hash(SignedContextV1[] memory signedContexts_) internal pure returns (bytes32 hash_) {
         uint256 cursor_;
         uint256 end_;
         bytes32 hashNil_ = HASH_NIL;
@@ -82,7 +82,7 @@ library LibContext {
             mstore(0, hashNil_)
         }
 
-        SignedContext memory signedContext_;
+        SignedContextV1 memory signedContext_;
         bytes32 mem0_;
         while (cursor_ < end_) {
             assembly ("memory-safe") {
@@ -130,7 +130,7 @@ library LibContext {
     /// position that would force signed context to be provided in the "correct"
     /// order, rather than relying on the `msg.sender` to honestly present data
     /// in any particular structure/order.
-    function build(uint256[][] memory baseContext_, SignedContext[] memory signedContexts_)
+    function build(uint256[][] memory baseContext_, SignedContextV1[] memory signedContexts_)
         internal
         view
         returns (uint256[][] memory)
