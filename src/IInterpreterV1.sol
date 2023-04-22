@@ -15,12 +15,11 @@ type EncodedDispatch is uint256;
 /// @dev The namespace for state changes as requested by the calling contract.
 /// The interpreter MUST apply this namespace IN ADDITION to namespacing by
 /// caller etc.
-
 type StateNamespace is uint256;
+
 /// @dev Additional bytes that can be used to configure a single opcode dispatch.
 /// Commonly used to specify the number of inputs to a variadic function such
 /// as addition or multiplication.
-
 type Operand is uint256;
 
 /// @dev The default state namespace MUST be used when a calling contract has no
