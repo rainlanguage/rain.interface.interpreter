@@ -2,58 +2,58 @@
 pragma solidity ^0.8.18;
 
 import "forge-std/Test.sol";
-import "../src/LibEvaluable.sol";
+import "src/LibEvaluable.sol";
 import "./LibEvaluableSlow.sol";
 
 contract LibEvaluableTest is Test {
     using LibEvaluable for Evaluable;
 
-    function testHashDifferent(Evaluable memory a_, Evaluable memory b_) public {
-        vm.assume(a_.interpreter != b_.interpreter || a_.store != b_.store || a_.expression != b_.expression);
-        assertTrue(a_.hash() != b_.hash());
+    function testHashDifferent(Evaluable memory a, Evaluable memory b) public {
+        vm.assume(a.interpreter != b.interpreter || a.store != b.store || a.expression != b.expression);
+        assertTrue(a.hash() != b.hash());
     }
 
-    function testHashSame(Evaluable memory a_) public {
-        Evaluable memory b_ = Evaluable(a_.interpreter, a_.store, a_.expression);
-        assertEq(a_.hash(), b_.hash());
+    function testHashSame(Evaluable memory a) public {
+        Evaluable memory b = Evaluable(a.interpreter, a.store, a.expression);
+        assertEq(a.hash(), b.hash());
     }
 
-    function testHashSensitivity(Evaluable memory a_, Evaluable memory b_) public {
-        vm.assume(a_.interpreter != b_.interpreter && a_.store != b_.store && a_.expression != b_.expression);
+    function testHashSensitivity(Evaluable memory a, Evaluable memory b) public {
+        vm.assume(a.interpreter != b.interpreter && a.store != b.store && a.expression != b.expression);
 
-        Evaluable memory c_;
+        Evaluable memory c;
 
-        assertTrue(a_.hash() != b_.hash());
+        assertTrue(a.hash() != b.hash());
 
         // Check interpreter changes hash.
-        c_ = Evaluable(b_.interpreter, a_.store, a_.expression);
-        assertTrue(a_.hash() != c_.hash());
+        c = Evaluable(b.interpreter, a.store, a.expression);
+        assertTrue(a.hash() != c.hash());
 
         // Check store changes hash.
-        c_ = Evaluable(a_.interpreter, b_.store, a_.expression);
-        assertTrue(a_.hash() != c_.hash());
+        c = Evaluable(a.interpreter, b.store, a.expression);
+        assertTrue(a.hash() != c.hash());
 
         // Check expression changes hash.
-        c_ = Evaluable(a_.interpreter, a_.store, b_.expression);
-        assertTrue(a_.hash() != c_.hash());
+        c = Evaluable(a.interpreter, a.store, b.expression);
+        assertTrue(a.hash() != c.hash());
 
         // Check match.
-        c_ = Evaluable(a_.interpreter, a_.store, a_.expression);
-        assertEq(a_.hash(), c_.hash());
+        c = Evaluable(a.interpreter, a.store, a.expression);
+        assertEq(a.hash(), c.hash());
 
         // Check hash doesn't include extraneous data
-        uint256 v0_ = type(uint256).max;
-        uint256 v1_ = 0;
-        Evaluable memory d_ = Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0));
+        uint256 v0 = type(uint256).max;
+        uint256 v1 = 0;
+        Evaluable memory d = Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0));
         assembly {
-            mstore(mload(0x40), v0_)
+            mstore(mload(0x40), v0)
         }
-        bytes32 hash0_ = d_.hash();
+        bytes32 hash0 = d.hash();
         assembly {
-            mstore(mload(0x40), v1_)
+            mstore(mload(0x40), v1)
         }
-        bytes32 hash1_ = d_.hash();
-        assertEq(hash0_, hash1_);
+        bytes32 hash1 = d.hash();
+        assertEq(hash0, hash1);
     }
 
     function testEvaluableHashGas0() public pure {
@@ -64,7 +64,7 @@ contract LibEvaluableTest is Test {
         LibEvaluableSlow.hashSlow(Evaluable(IInterpreterV1(address(0)), IInterpreterStoreV1(address(0)), address(0)));
     }
 
-    function testEvaluableReferenceImplementation(Evaluable memory evaluable_) public {
-        assertEq(LibEvaluable.hash(evaluable_), LibEvaluableSlow.hashSlow(evaluable_));
+    function testEvaluableReferenceImplementation(Evaluable memory evaluable) public {
+        assertEq(LibEvaluable.hash(evaluable), LibEvaluableSlow.hashSlow(evaluable));
     }
 }
