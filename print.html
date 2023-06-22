@@ -1,0 +1,834 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="book.css">
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="index.html">Home</a></li><li class="chapter-item affix "><li class="part-title">src</li><li class="chapter-item "><a href="src/deployerDiscoverable/index.html">❱ deployerDiscoverable</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="src/deployerDiscoverable/DeployerDiscoverableMetaV1.sol/struct.DeployerDiscoverableMetaV1ConstructionConfig.html">DeployerDiscoverableMetaV1ConstructionConfig</a></li><li class="chapter-item "><a href="src/deployerDiscoverable/DeployerDiscoverableMetaV1.sol/abstract.DeployerDiscoverableMetaV1.html">DeployerDiscoverableMetaV1</a></li><li class="chapter-item "><a href="src/deployerDiscoverable/LibDeployerDiscoverable.sol/library.LibDeployerDiscoverable.html">LibDeployerDiscoverable</a></li></ol></li><li class="chapter-item "><a href="src/deprecated/index.html">❱ deprecated</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="src/deprecated/IInterpreterCallerV1.sol/struct.SignedContext.html">SignedContext</a></li><li class="chapter-item "><a href="src/deprecated/IInterpreterCallerV1.sol/interface.IInterpreterCallerV1.html">IInterpreterCallerV1</a></li><li class="chapter-item "><a href="src/deprecated/IInterpreterCallerV1.sol/constants.IInterpreterCallerV1.html">IInterpreterCallerV1 constants</a></li></ol></li><li class="chapter-item "><a href="src/unstable/index.html">❱ unstable</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="src/unstable/IDebugExpressionDeployerV1.sol/interface.IDebugExpressionDeployerV1.html">IDebugExpressionDeployerV1</a></li><li class="chapter-item "><a href="src/unstable/IDebugInterpreterV1.sol/interface.IDebugInterpreterV1.html">IDebugInterpreterV1</a></li></ol></li><li class="chapter-item "><a href="src/IExpressionDeployerV1.sol/interface.IExpressionDeployerV1.html">IExpressionDeployerV1</a></li><li class="chapter-item "><a href="src/IInterpreterCallerV2.sol/struct.SignedContextV1.html">SignedContextV1</a></li><li class="chapter-item "><a href="src/IInterpreterCallerV2.sol/interface.IInterpreterCallerV2.html">IInterpreterCallerV2</a></li><li class="chapter-item "><a href="src/IInterpreterCallerV2.sol/constants.IInterpreterCallerV2.html">IInterpreterCallerV2 constants</a></li><li class="chapter-item "><a href="src/IInterpreterExternV1.sol/type.EncodedExternDispatch.html">EncodedExternDispatch</a></li><li class="chapter-item "><a href="src/IInterpreterExternV1.sol/type.ExternDispatch.html">ExternDispatch</a></li><li class="chapter-item "><a href="src/IInterpreterExternV1.sol/interface.IInterpreterExternV1.html">IInterpreterExternV1</a></li><li class="chapter-item "><a href="src/IInterpreterStoreV1.sol/type.FullyQualifiedNamespace.html">FullyQualifiedNamespace</a></li><li class="chapter-item "><a href="src/IInterpreterStoreV1.sol/interface.IInterpreterStoreV1.html">IInterpreterStoreV1</a></li><li class="chapter-item "><a href="src/IInterpreterStoreV1.sol/constants.IInterpreterStoreV1.html">IInterpreterStoreV1 constants</a></li><li class="chapter-item "><a href="src/IInterpreterV1.sol/type.SourceIndex.html">SourceIndex</a></li><li class="chapter-item "><a href="src/IInterpreterV1.sol/type.EncodedDispatch.html">EncodedDispatch</a></li><li class="chapter-item "><a href="src/IInterpreterV1.sol/type.StateNamespace.html">StateNamespace</a></li><li class="chapter-item "><a href="src/IInterpreterV1.sol/type.Operand.html">Operand</a></li><li class="chapter-item "><a href="src/IInterpreterV1.sol/interface.IInterpreterV1.html">IInterpreterV1</a></li><li class="chapter-item "><a href="src/IInterpreterV1.sol/constants.IInterpreterV1.html">IInterpreterV1 constants</a></li><li class="chapter-item "><a href="src/LibContext.sol/error.InvalidSignature.html">InvalidSignature</a></li><li class="chapter-item "><a href="src/LibContext.sol/library.LibContext.html">LibContext</a></li><li class="chapter-item "><a href="src/LibEncodedDispatch.sol/library.LibEncodedDispatch.html">LibEncodedDispatch</a></li><li class="chapter-item "><a href="src/LibEvaluable.sol/struct.EvaluableConfig.html">EvaluableConfig</a></li><li class="chapter-item "><a href="src/LibEvaluable.sol/struct.Evaluable.html">Evaluable</a></li><li class="chapter-item "><a href="src/LibEvaluable.sol/library.LibEvaluable.html">LibEvaluable</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rainprotocol/rain.interface.interpreter" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>This repo has been archived and merged with https://github.com/rainprotocol/rain.interpreter</p>
+<h1 id="raininterfaceinterpreter"><a class="header" href="#raininterfaceinterpreter">rain.interface.interpreter</a></h1>
+<p>Docs at https://rainprotocol.github.io/rain.interface.interpreter</p>
+<p>Interfaces and structs required for arbitrary Solidity contracts to call
+arbitrary interpreters to negotiate the evaluation of expressions between them.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="contents"><a class="header" href="#contents">Contents</a></h1>
+<ul>
+<li><a href="src/deployerDiscoverable/DeployerDiscoverableMetaV1.sol/struct.DeployerDiscoverableMetaV1ConstructionConfig.html">DeployerDiscoverableMetaV1ConstructionConfig</a></li>
+<li><a href="src/deployerDiscoverable/DeployerDiscoverableMetaV1.sol/abstract.DeployerDiscoverableMetaV1.html">DeployerDiscoverableMetaV1</a></li>
+<li><a href="src/deployerDiscoverable/LibDeployerDiscoverable.sol/library.LibDeployerDiscoverable.html">LibDeployerDiscoverable</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="deployerdiscoverablemetav1constructionconfig"><a class="header" href="#deployerdiscoverablemetav1constructionconfig">DeployerDiscoverableMetaV1ConstructionConfig</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/deployerDiscoverable/DeployerDiscoverableMetaV1.sol">Git Source</a></p>
+<p>Construction config for <code>DeployerDiscoverableMetaV1</code>.</p>
+<pre><code class="language-solidity">struct DeployerDiscoverableMetaV1ConstructionConfig {
+    address deployer;
+    bytes meta;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="deployerdiscoverablemetav1"><a class="header" href="#deployerdiscoverablemetav1">DeployerDiscoverableMetaV1</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/deployerDiscoverable/DeployerDiscoverableMetaV1.sol">Git Source</a></p>
+<p><strong>Inherits:</strong>
+IMetaV1</p>
+<p>Upon construction, checks metadata against a known hash, emits it
+then touches the deployer (deploy an empty expression). This allows indexers
+to discover the metadata of the <code>DeployerDiscoverableMetaV1</code> contract by
+indexing the deployer. In this way the deployer acts as a pseudo-registry by
+virtue of it being a natural hub for interactions with calling contracts.</p>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<h3 id="constructor"><a class="header" href="#constructor">constructor</a></h3>
+<pre><code class="language-solidity">constructor(bytes32 metaHash, DeployerDiscoverableMetaV1ConstructionConfig memory config);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="libdeployerdiscoverable"><a class="header" href="#libdeployerdiscoverable">LibDeployerDiscoverable</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/deployerDiscoverable/LibDeployerDiscoverable.sol">Git Source</a></p>
+<h2 id="functions-1"><a class="header" href="#functions-1">Functions</a></h2>
+<h3 id="touchdeployer"><a class="header" href="#touchdeployer">touchDeployer</a></h3>
+<p>Hack so that some deployer will emit an event with the sender as the
+caller of <code>touchDeployer</code>. This MAY be needed by indexers such as
+subgraph that can only index events from the first moment they are aware
+of some contract. The deployer MUST be registered in ERC1820 registry
+before it is touched, THEN the caller meta MUST be emitted after the
+deployer is touched. This allows indexers such as subgraph to index the
+deployer, then see the caller, then see the caller's meta emitted in the
+same transaction.
+This is NOT required if ANY other expression is deployed in the same
+transaction as the caller meta, there only needs to be one expression on
+ANY deployer known to ERC1820.</p>
+<pre><code class="language-solidity">function touchDeployer(address deployer) internal;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="contents-1"><a class="header" href="#contents-1">Contents</a></h1>
+<ul>
+<li><a href="src/deprecated/IInterpreterCallerV1.sol/struct.SignedContext.html">SignedContext</a></li>
+<li><a href="src/deprecated/IInterpreterCallerV1.sol/interface.IInterpreterCallerV1.html">IInterpreterCallerV1</a></li>
+<li><a href="src/deprecated/IInterpreterCallerV1.sol/constants.IInterpreterCallerV1.html">IInterpreterCallerV1 constants</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="signedcontext"><a class="header" href="#signedcontext">SignedContext</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/deprecated/IInterpreterCallerV1.sol">Git Source</a></p>
+<p>Typed embodiment of some context data with associated signer and signature.
+The signature MUST be over the packed encoded bytes of the context array,
+i.e. the context array concatenated as bytes without the length prefix, then
+hashed, then handled as per EIP-191 to produce a final hash to be signed.
+The calling contract (likely with the help of <code>LibContext</code>) is responsible
+for ensuring the authenticity of the signature, but not authorizing <em>who</em> can
+sign. IN ADDITION to authorisation of the signer to known-good entities the
+expression is also responsible for:</p>
+<ul>
+<li>Enforcing the context is the expected data (e.g. with a domain separator)</li>
+<li>Tracking and enforcing nonces if signed contexts are only usable one time</li>
+<li>Tracking and enforcing uniqueness of signed data if relevant</li>
+<li>Checking and enforcing expiry times if present and relevant in the context</li>
+<li>Many other potential constraints that expressions may want to enforce
+EIP-1271 smart contract signatures are supported in addition to EOA
+signatures via. the Open Zeppelin <code>SignatureChecker</code> library, which is
+wrapped by <code>LibContext.build</code>. As smart contract signatures are checked
+onchain they CAN BE REVOKED AT ANY MOMENT as the smart contract can simply
+return <code>false</code> when it previously returned <code>true</code>.</li>
+</ul>
+<pre><code class="language-solidity">struct SignedContext {
+    address signer;
+    bytes signature;
+    uint256[] context;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iinterpretercallerv1"><a class="header" href="#iinterpretercallerv1">IInterpreterCallerV1</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/deprecated/IInterpreterCallerV1.sol">Git Source</a></p>
+<p>A contract that calls an <code>IInterpreterV1</code> via. <code>eval</code>. There are near
+zero requirements on a caller other than:</p>
+<ul>
+<li>Emit some meta about itself upon construction so humans know what the
+contract does</li>
+<li>Provide the context, which can be built in a standard way by <code>LibContext</code></li>
+<li>Handle the stack array returned from <code>eval</code></li>
+<li>OPTIONALLY emit the <code>Context</code> event</li>
+<li>OPTIONALLY set state on the <code>IInterpreterStoreV1</code> returned from eval.</li>
+</ul>
+<h2 id="events"><a class="header" href="#events">Events</a></h2>
+<h3 id="context"><a class="header" href="#context">Context</a></h3>
+<p>Calling contracts SHOULD emit <code>Context</code> before calling <code>eval</code> if they
+are able. Notably <code>eval</code> MAY be called within a static call which means
+that events cannot be emitted, in which case this does not apply. It MAY
+NOT be useful to emit this multiple times for several eval calls if they
+all share a common context, in which case a single emit is sufficient.</p>
+<pre><code class="language-solidity">event Context(address sender, uint256[][] context);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="constants"><a class="header" href="#constants">Constants</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/deprecated/IInterpreterCallerV1.sol">Git Source</a></p>
+<h3 id="signed_context_signer_offset"><a class="header" href="#signed_context_signer_offset">SIGNED_CONTEXT_SIGNER_OFFSET</a></h3>
+<pre><code class="language-solidity">uint256 constant SIGNED_CONTEXT_SIGNER_OFFSET = 0;
+</code></pre>
+<h3 id="signed_context_context_offset"><a class="header" href="#signed_context_context_offset">SIGNED_CONTEXT_CONTEXT_OFFSET</a></h3>
+<pre><code class="language-solidity">uint256 constant SIGNED_CONTEXT_CONTEXT_OFFSET = 0x20;
+</code></pre>
+<h3 id="signed_context_signature_offset"><a class="header" href="#signed_context_signature_offset">SIGNED_CONTEXT_SIGNATURE_OFFSET</a></h3>
+<pre><code class="language-solidity">uint256 constant SIGNED_CONTEXT_SIGNATURE_OFFSET = 0x40;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="contents-2"><a class="header" href="#contents-2">Contents</a></h1>
+<ul>
+<li><a href="src/unstable/IDebugExpressionDeployerV1.sol/interface.IDebugExpressionDeployerV1.html">IDebugExpressionDeployerV1</a></li>
+<li><a href="src/unstable/IDebugInterpreterV1.sol/interface.IDebugInterpreterV1.html">IDebugInterpreterV1</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="idebugexpressiondeployerv1"><a class="header" href="#idebugexpressiondeployerv1">IDebugExpressionDeployerV1</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/unstable/IDebugExpressionDeployerV1.sol">Git Source</a></p>
+<h2 id="functions-2"><a class="header" href="#functions-2">Functions</a></h2>
+<h3 id="offchaindebugeval"><a class="header" href="#offchaindebugeval">offchainDebugEval</a></h3>
+<pre><code class="language-solidity">function offchainDebugEval(
+    bytes[] memory sources,
+    uint256[] memory constants,
+    FullyQualifiedNamespace namespace,
+    uint256[][] memory context,
+    SourceIndex sourceIndex,
+    uint256[] memory initialStack,
+    uint256 minOutputs
+) external view returns (uint256[] memory finalStack, uint256[] memory kvs);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="idebuginterpreterv1"><a class="header" href="#idebuginterpreterv1">IDebugInterpreterV1</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/unstable/IDebugInterpreterV1.sol">Git Source</a></p>
+<h2 id="functions-3"><a class="header" href="#functions-3">Functions</a></h2>
+<h3 id="offchaindebugeval-1"><a class="header" href="#offchaindebugeval-1">offchainDebugEval</a></h3>
+<pre><code class="language-solidity">function offchainDebugEval(
+    IInterpreterStoreV1 store,
+    FullyQualifiedNamespace namespace,
+    bytes[] calldata compiledSources,
+    uint256[] calldata constants,
+    uint256[][] calldata context,
+    uint256[] calldata initialStack,
+    SourceIndex sourceIndex_
+) external view returns (uint256[] calldata finalStack, uint256[] calldata kvs);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iexpressiondeployerv1"><a class="header" href="#iexpressiondeployerv1">IExpressionDeployerV1</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IExpressionDeployerV1.sol">Git Source</a></p>
+<p>Companion to <code>IInterpreterV1</code> responsible for onchain static code
+analysis and deploying expressions. Each <code>IExpressionDeployerV1</code> is tightly
+coupled at the bytecode level to some interpreter that it knows how to
+analyse and deploy expressions for. The expression deployer can perform an
+integrity check &quot;dry run&quot; of candidate source code for the intepreter. The
+critical analysis/transformation includes:</p>
+<ul>
+<li>Enforcement of no out of bounds memory reads/writes</li>
+<li>Calculation of memory required to eval the stack with a single allocation</li>
+<li>Replacing index based opcodes with absolute interpreter function pointers</li>
+<li>Enforcement that all opcodes and operands used exist and are valid
+This analysis is highly sensitive to the specific implementation and position
+of all opcodes and function pointers as compiled into the interpreter. This
+is what makes the coupling between an interpreter and expression deployer
+so tight. Ideally all responsibilities would be handled by a single contract
+but this introduces code size issues quickly by roughly doubling the compiled
+logic of each opcode (half for the integrity check and half for evaluation).
+Interpreters MUST assume that expression deployers are malicious and fail
+gracefully if the integrity check is corrupt/bypassed and/or function
+pointers are incorrect, etc. i.e. the interpreter MUST always return a stack
+from <code>eval</code> in a read only way or error. I.e. it is the expression deployer's
+responsibility to do everything it can to prevent undefined behaviour in the
+interpreter, and the interpreter's responsibility to handle the expression
+deployer completely failing to do so.</li>
+</ul>
+<h2 id="functions-4"><a class="header" href="#functions-4">Functions</a></h2>
+<h3 id="deployexpression"><a class="header" href="#deployexpression">deployExpression</a></h3>
+<p>Expressions are expected to be deployed onchain as immutable contract
+code with a first class address like any other contract or account.
+Technically this is optional in the sense that all the tools required to
+eval some expression and define all its opcodes are available as
+libraries.
+In practise there are enough advantages to deploying the sources directly
+onchain as contract data and loading them from the interpreter at eval:</p>
+<ul>
+<li>Loading and storing binary data is gas efficient as immutable contract
+data</li>
+<li>Expressions need to be immutable between their deploy time integrity
+check and runtime evaluation</li>
+<li>Passing the address of an expression through calldata to an interpreter
+is cheaper than passing an entire expression through calldata</li>
+<li>Conceptually a very simple approach, even if implementations like
+SSTORE2 are subtle under the hood
+The expression deployer MUST perform an integrity check of the source
+code before it puts the expression onchain at a known address. The
+integrity check MUST at a minimum (it is free to do additional static
+analysis) calculate the memory required to be allocated for the stack in
+total, and that no out of bounds memory reads/writes occur within this
+stack. A simple example of an invalid source would be one that pushes one
+value to the stack then attempts to pops two values, clearly we cannot
+remove more values than we added. The <code>IExpressionDeployerV1</code> MUST revert
+in the case of any integrity failure, all integrity checks MUST pass in
+order for the deployment to complete.
+Once the integrity check is complete the <code>IExpressionDeployerV1</code> MUST do
+any additional processing required by its paired interpreter.
+For example, the <code>IExpressionDeployerV1</code> MAY NEED to replace the indexed
+opcodes in the <code>ExpressionConfig</code> sources with real function pointers
+from the corresponding interpreter.</li>
+</ul>
+<pre><code class="language-solidity">function deployExpression(bytes[] memory sources, uint256[] memory constants, uint256[] memory minOutputs)
+    external
+    returns (IInterpreterV1 interpreter, IInterpreterStoreV1 store, address expression);
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>sources</code></td><td><code>bytes[]</code></td><td>Sources verbatim. These sources MUST be provided in their sequential/index opcode form as the deployment process will need to index into BOTH the integrity check and the final runtime function pointers. This will be emitted in an event for offchain processing to use the indexed opcode sources. The first N sources are considered entrypoints and will be integrity checked by the expression deployer against a starting stack height of 0. Non-entrypoint sources MAY be provided for internal use such as the <code>call</code> opcode but will NOT be integrity checked UNLESS entered by an opcode in an entrypoint.</td></tr>
+<tr><td><code>constants</code></td><td><code>uint256[]</code></td><td>Constants verbatim. Constants are provided alongside sources rather than inline as it allows us to avoid variable length opcodes and can be more memory efficient if the same constant is referenced several times from the sources.</td></tr>
+<tr><td><code>minOutputs</code></td><td><code>uint256[]</code></td><td>The first N sources on the state config are entrypoints to the expression where N is the length of the <code>minOutputs</code> array. Each item in the <code>minOutputs</code> array specifies the number of outputs that MUST be present on the final stack for an evaluation of each entrypoint. The minimum output for some entrypoint MAY be zero if the expectation is that the expression only applies checks and error logic. Non-entrypoint sources MUST NOT have a minimum outputs length specified.</td></tr>
+</tbody></table>
+</div>
+<p><strong>Returns</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>interpreter</code></td><td><code>IInterpreterV1</code></td><td>The interpreter the deployer believes it is qualified to perform integrity checks on behalf of.</td></tr>
+<tr><td><code>store</code></td><td><code>IInterpreterStoreV1</code></td><td>The interpreter store the deployer believes is compatible with the interpreter.</td></tr>
+<tr><td><code>expression</code></td><td><code>address</code></td><td>The address of the deployed onchain expression. MUST be valid according to all integrity checks the deployer is aware of.</td></tr>
+</tbody></table>
+</div>
+<h2 id="events-1"><a class="header" href="#events-1">Events</a></h2>
+<h3 id="dispair"><a class="header" href="#dispair">DISpair</a></h3>
+<p>This is the literal InterpreterOpMeta bytes to be used offchain to make
+sense of the opcodes in this interpreter deployment, as a human. For
+formats like json that make heavy use of boilerplate, repetition and
+whitespace, some kind of compression is recommended.</p>
+<pre><code class="language-solidity">event DISpair(address sender, address deployer, address interpreter, address store, bytes opMeta);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="signedcontextv1"><a class="header" href="#signedcontextv1">SignedContextV1</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterCallerV2.sol">Git Source</a></p>
+<p>Typed embodiment of some context data with associated signer and signature.
+The signature MUST be over the packed encoded bytes of the context array,
+i.e. the context array concatenated as bytes without the length prefix, then
+hashed, then handled as per EIP-191 to produce a final hash to be signed.
+The calling contract (likely with the help of <code>LibContext</code>) is responsible
+for ensuring the authenticity of the signature, but not authorizing <em>who</em> can
+sign. IN ADDITION to authorisation of the signer to known-good entities the
+expression is also responsible for:</p>
+<ul>
+<li>Enforcing the context is the expected data (e.g. with a domain separator)</li>
+<li>Tracking and enforcing nonces if signed contexts are only usable one time</li>
+<li>Tracking and enforcing uniqueness of signed data if relevant</li>
+<li>Checking and enforcing expiry times if present and relevant in the context</li>
+<li>Many other potential constraints that expressions may want to enforce
+EIP-1271 smart contract signatures are supported in addition to EOA
+signatures via. the Open Zeppelin <code>SignatureChecker</code> library, which is
+wrapped by <code>LibContext.build</code>. As smart contract signatures are checked
+onchain they CAN BE REVOKED AT ANY MOMENT as the smart contract can simply
+return <code>false</code> when it previously returned <code>true</code>.</li>
+</ul>
+<pre><code class="language-solidity">struct SignedContextV1 {
+    address signer;
+    uint256[] context;
+    bytes signature;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iinterpretercallerv2"><a class="header" href="#iinterpretercallerv2">IInterpreterCallerV2</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterCallerV2.sol">Git Source</a></p>
+<p>A contract that calls an <code>IInterpreterV1</code> via. <code>eval</code>. There are near
+zero requirements on a caller other than:</p>
+<ul>
+<li>Emit some meta about itself upon construction so humans know what the
+contract does</li>
+<li>Provide the context, which can be built in a standard way by <code>LibContext</code></li>
+<li>Handle the stack array returned from <code>eval</code></li>
+<li>OPTIONALLY emit the <code>Context</code> event</li>
+<li>OPTIONALLY set state on the <code>IInterpreterStoreV1</code> returned from eval.</li>
+</ul>
+<h2 id="events-2"><a class="header" href="#events-2">Events</a></h2>
+<h3 id="context-1"><a class="header" href="#context-1">Context</a></h3>
+<p>Calling contracts SHOULD emit <code>Context</code> before calling <code>eval</code> if they
+are able. Notably <code>eval</code> MAY be called within a static call which means
+that events cannot be emitted, in which case this does not apply. It MAY
+NOT be useful to emit this multiple times for several eval calls if they
+all share a common context, in which case a single emit is sufficient.</p>
+<pre><code class="language-solidity">event Context(address sender, uint256[][] context);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="constants-1"><a class="header" href="#constants-1">Constants</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterCallerV2.sol">Git Source</a></p>
+<h3 id="signed_context_signer_offset-1"><a class="header" href="#signed_context_signer_offset-1">SIGNED_CONTEXT_SIGNER_OFFSET</a></h3>
+<pre><code class="language-solidity">uint256 constant SIGNED_CONTEXT_SIGNER_OFFSET = 0;
+</code></pre>
+<h3 id="signed_context_context_offset-1"><a class="header" href="#signed_context_context_offset-1">SIGNED_CONTEXT_CONTEXT_OFFSET</a></h3>
+<pre><code class="language-solidity">uint256 constant SIGNED_CONTEXT_CONTEXT_OFFSET = 0x20;
+</code></pre>
+<h3 id="signed_context_signature_offset-1"><a class="header" href="#signed_context_signature_offset-1">SIGNED_CONTEXT_SIGNATURE_OFFSET</a></h3>
+<pre><code class="language-solidity">uint256 constant SIGNED_CONTEXT_SIGNATURE_OFFSET = 0x40;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="encodedexterndispatch"><a class="header" href="#encodedexterndispatch">EncodedExternDispatch</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterExternV1.sol">Git Source</a></p>
+<pre><code class="language-solidity">type EncodedExternDispatch is uint256;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="externdispatch"><a class="header" href="#externdispatch">ExternDispatch</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterExternV1.sol">Git Source</a></p>
+<pre><code class="language-solidity">type ExternDispatch is uint256;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iinterpreterexternv1"><a class="header" href="#iinterpreterexternv1">IInterpreterExternV1</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterExternV1.sol">Git Source</a></p>
+<h2 id="functions-5"><a class="header" href="#functions-5">Functions</a></h2>
+<h3 id="extern"><a class="header" href="#extern">extern</a></h3>
+<p>Handles a single dispatch.</p>
+<pre><code class="language-solidity">function extern(ExternDispatch dispatch_, uint256[] memory inputs_) external view returns (uint256[] memory outputs_);
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>dispatch_</code></td><td><code>ExternDispatch</code></td><td>Encoded information about the extern to dispatch. Analogous to the opcode/operand in the interpreter.</td></tr>
+<tr><td><code>inputs_</code></td><td><code>uint256[]</code></td><td>The array of inputs for the dispatched logic.</td></tr>
+</tbody></table>
+</div>
+<p><strong>Returns</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>outputs_</code></td><td><code>uint256[]</code></td><td>The result of the dispatched logic.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="fullyqualifiednamespace"><a class="header" href="#fullyqualifiednamespace">FullyQualifiedNamespace</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterStoreV1.sol">Git Source</a></p>
+<p>A fully qualified namespace includes the interpreter's own namespacing logic
+IN ADDITION to the calling contract's requested <code>StateNamespace</code>. Typically
+this involves hashing the <code>msg.sender</code> into the <code>StateNamespace</code> so that each
+caller operates within its own disjoint state universe. Intepreters MUST NOT
+allow either the caller nor any expression/word to modify this directly on
+pain of potential key collisions on writes to the interpreter's own storage.</p>
+<pre><code class="language-solidity">type FullyQualifiedNamespace is uint256;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iinterpreterstorev1"><a class="header" href="#iinterpreterstorev1">IInterpreterStoreV1</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterStoreV1.sol">Git Source</a></p>
+<p>Tracks state changes on behalf of an interpreter. A single store can
+handle state changes for many calling contracts, many interpreters and many
+expressions. The store is responsible for ensuring that applying these state
+changes is safe from key collisions with calls to <code>set</code> from different
+<code>msg.sender</code> callers. I.e. it MUST NOT be possible for a caller to modify the
+state changes associated with some other caller.
+The store defines the shape of its own state changes, which is opaque to the
+calling contract. For example, some store may treat the list of state changes
+as a pairwise key/value set, and some other store may treat it as a literal
+list to be stored as-is.
+Each interpreter decides for itself which store to use based on the
+compatibility of its own opcodes.
+The store MUST assume the state changes have been corrupted by the calling
+contract due to bugs or malicious intent, and enforce state isolation between
+callers despite arbitrarily invalid state changes. The store MUST revert if
+it can detect invalid state changes, such as a key/value list having an odd
+number of items, but this MAY NOT be possible if the corruption is
+undetectable.</p>
+<h2 id="functions-6"><a class="header" href="#functions-6">Functions</a></h2>
+<h3 id="set"><a class="header" href="#set">set</a></h3>
+<p>Mutates the interpreter store in bulk. The bulk values are provided in
+the form of a <code>uint256[]</code> which can be treated e.g. as pairwise keys and
+values to be stored in a Solidity mapping. The <code>IInterpreterStoreV1</code>
+defines the meaning of the <code>uint256[]</code> for its own storage logic.</p>
+<pre><code class="language-solidity">function set(StateNamespace namespace, uint256[] calldata kvs) external;
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>namespace</code></td><td><code>StateNamespace</code></td><td>The unqualified namespace for the set that MUST be fully qualified by the <code>IInterpreterStoreV1</code> to prevent key collisions between callers. The fully qualified namespace forms a compound key with the keys for each value to set.</td></tr>
+<tr><td><code>kvs</code></td><td><code>uint256[]</code></td><td>The list of changes to apply to the store's internal state.</td></tr>
+</tbody></table>
+</div>
+<h3 id="get"><a class="header" href="#get">get</a></h3>
+<p>Given a fully qualified namespace and key, return the associated value.
+Ostensibly the interpreter can use this to implement opcodes that read
+previously set values. The interpreter MUST apply the same qualification
+logic as the store that it uses to guarantee consistent round tripping of
+data and prevent malicious behaviours. Technically also allows onchain
+reads of any set value from any contract, not just interpreters, but in
+this case readers MUST be aware and handle inconsistencies between get
+and set while the state changes are still in memory in the calling
+context and haven't yet been persisted to the store.
+<code>IInterpreterStoreV1</code> uses the same fallback behaviour for unset keys as
+Solidity. Specifically, any UNSET VALUES SILENTLY FALLBACK TO <code>0</code>.</p>
+<pre><code class="language-solidity">function get(FullyQualifiedNamespace namespace, uint256 key) external view returns (uint256);
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>namespace</code></td><td><code>FullyQualifiedNamespace</code></td><td>The fully qualified namespace to get a single value for.</td></tr>
+<tr><td><code>key</code></td><td><code>uint256</code></td><td>The key to get the value for within the namespace.</td></tr>
+</tbody></table>
+</div>
+<p><strong>Returns</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>&lt;none&gt;</code></td><td><code>uint256</code></td><td>The value OR ZERO IF NOT SET.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="constants-2"><a class="header" href="#constants-2">Constants</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterStoreV1.sol">Git Source</a></p>
+<h3 id="no_store"><a class="header" href="#no_store">NO_STORE</a></h3>
+<pre><code class="language-solidity">IInterpreterStoreV1 constant NO_STORE = IInterpreterStoreV1(address(0));
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sourceindex"><a class="header" href="#sourceindex">SourceIndex</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterV1.sol">Git Source</a></p>
+<p><em>The index of a source within a deployed expression that can be evaluated
+by an <code>IInterpreterV1</code>. MAY be an entrypoint or the index of a source called
+internally such as by the <code>call</code> opcode.</em></p>
+<pre><code class="language-solidity">type SourceIndex is uint16;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="encodeddispatch"><a class="header" href="#encodeddispatch">EncodedDispatch</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterV1.sol">Git Source</a></p>
+<p><em>Encoded information about a specific evaluation including the expression
+address onchain, entrypoint and expected return values.</em></p>
+<pre><code class="language-solidity">type EncodedDispatch is uint256;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="statenamespace"><a class="header" href="#statenamespace">StateNamespace</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterV1.sol">Git Source</a></p>
+<p><em>The namespace for state changes as requested by the calling contract.
+The interpreter MUST apply this namespace IN ADDITION to namespacing by
+caller etc.</em></p>
+<pre><code class="language-solidity">type StateNamespace is uint256;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="operand"><a class="header" href="#operand">Operand</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterV1.sol">Git Source</a></p>
+<p><em>Additional bytes that can be used to configure a single opcode dispatch.
+Commonly used to specify the number of inputs to a variadic function such
+as addition or multiplication.</em></p>
+<pre><code class="language-solidity">type Operand is uint256;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iinterpreterv1"><a class="header" href="#iinterpreterv1">IInterpreterV1</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterV1.sol">Git Source</a></p>
+<h2 id="functions-7"><a class="header" href="#functions-7">Functions</a></h2>
+<h3 id="functionpointers"><a class="header" href="#functionpointers">functionPointers</a></h3>
+<p>Exposes the function pointers as <code>uint16</code> values packed into a single
+<code>bytes</code> in the same order as they would be indexed into by opcodes. For
+example, if opcode <code>2</code> should dispatch function at position <code>0x1234</code> then
+the start of the returned bytes would be <code>0xXXXXXXXX1234</code> where <code>X</code> is
+a placeholder for the function pointers of opcodes <code>0</code> and <code>1</code>.
+<code>IExpressionDeployerV1</code> contracts use these function pointers to
+&quot;compile&quot; the expression into something that an interpreter can dispatch
+directly without paying gas to lookup the same at runtime. As the
+validity of any integrity check and subsequent dispatch is highly
+sensitive to both the function pointers and overall bytecode of the
+interpreter, <code>IExpressionDeployerV1</code> contracts SHOULD implement guards
+against accidentally being deployed onchain paired against an unknown
+interpreter. It is very easy for an apparent compatible pairing to be
+subtly and critically incompatible due to addition/removal/reordering of
+opcodes and compiler optimisations on the interpreter bytecode.
+This MAY return different values during construction vs. all other times
+after the interpreter has been successfully deployed onchain. DO NOT rely
+on function pointers reported during contract construction.</p>
+<pre><code class="language-solidity">function functionPointers() external view returns (bytes memory);
+</code></pre>
+<h3 id="eval"><a class="header" href="#eval">eval</a></h3>
+<p>The raison d'etre for an interpreter. Given some expression and per-call
+additional contextual data, produce a stack of results and a set of state
+changes that the caller MAY OPTIONALLY pass back to be persisted by a
+call to <code>IInterpreterStoreV1.set</code>.</p>
+<pre><code class="language-solidity">function eval(
+    IInterpreterStoreV1 store,
+    StateNamespace namespace,
+    EncodedDispatch dispatch,
+    uint256[][] calldata context
+) external view returns (uint256[] memory stack, uint256[] memory kvs);
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>store</code></td><td><code>IInterpreterStoreV1</code></td><td>The storage contract that the returned key/value pairs MUST be passed to IF the calling contract is in a non-static calling context. Static calling contexts MUST pass <code>address(0)</code>.</td></tr>
+<tr><td><code>namespace</code></td><td><code>StateNamespace</code></td><td>The state namespace that will be fully qualified by the interpreter at runtime in order to perform gets on the underlying store. MUST be the same namespace passed to the store by the calling contract when sending the resulting key/value items to storage.</td></tr>
+<tr><td><code>dispatch</code></td><td><code>EncodedDispatch</code></td><td>All the information required for the interpreter to load an expression, select an entrypoint and return the values expected by the caller. The interpreter MAY encode dispatches differently to <code>LibEncodedDispatch</code> but this WILL negatively impact compatibility for calling contracts that hardcode the encoding logic.</td></tr>
+<tr><td><code>context</code></td><td><code>uint256[][]</code></td><td>A 2-dimensional array of data that can be indexed into at runtime by the interpreter. The calling contract is responsible for ensuring the authenticity and completeness of context data. The interpreter MUST revert at runtime if an expression attempts to index into some context value that is not provided by the caller. This implies that context reads cannot be checked for out of bounds reads at deploy time, as the runtime context MAY be provided in a different shape to what the expression is expecting. Same as <code>eval</code> but allowing the caller to specify a namespace under which the state changes will be applied. The interpeter MUST ensure that keys will never collide across namespaces, even if, for example: - The calling contract is malicious and attempts to craft a collision with state changes from another contract - The expression is malicious and attempts to craft a collision with other expressions evaluated by the same calling contract A malicious entity MAY have access to significant offchain resources to attempt to precompute key collisions through brute force. The collision resistance of namespaces should be comparable or equivalent to the collision resistance of the hashing algorithms employed by the blockchain itself, such as the design of <code>mapping</code> in Solidity that hashes each nested key to produce a collision resistant compound key.</td></tr>
+</tbody></table>
+</div>
+<p><strong>Returns</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>stack</code></td><td><code>uint256[]</code></td><td>The list of values produced by evaluating the expression. MUST NOT be longer than the maximum length specified by <code>dispatch</code>, if applicable.</td></tr>
+<tr><td><code>kvs</code></td><td><code>uint256[]</code></td><td>A list of pairwise key/value items to be saved in the store.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="constants-3"><a class="header" href="#constants-3">Constants</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/IInterpreterV1.sol">Git Source</a></p>
+<h3 id="default_state_namespace"><a class="header" href="#default_state_namespace">DEFAULT_STATE_NAMESPACE</a></h3>
+<p><em>The default state namespace MUST be used when a calling contract has no
+particular opinion on or need for dynamic namespaces.</em></p>
+<pre><code class="language-solidity">StateNamespace constant DEFAULT_STATE_NAMESPACE = StateNamespace.wrap(0);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="invalidsignature"><a class="header" href="#invalidsignature">InvalidSignature</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/LibContext.sol">Git Source</a></p>
+<p>Thrown when the ith signature from a list of signed contexts is invalid.</p>
+<pre><code class="language-solidity">error InvalidSignature(uint256 i);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="libcontext"><a class="header" href="#libcontext">LibContext</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/LibContext.sol">Git Source</a></p>
+<p>Conventions for working with context as a calling contract. All of
+this functionality is OPTIONAL but probably useful for the majority of use
+cases. By building and authenticating onchain, caller provided and signed
+contexts all in a standard way the overall usability of context is greatly
+improved for expression authors and readers. Any calling contract that can
+match the context expectations of an existing expression is one large step
+closer to compatibility and portability, inheriting network effects of what
+has already been authored elsewhere.</p>
+<h2 id="functions-8"><a class="header" href="#functions-8">Functions</a></h2>
+<h3 id="base"><a class="header" href="#base">base</a></h3>
+<p>The base context is the <code>msg.sender</code> and address of the calling contract.
+As the interpreter itself is called via an external interface and may be
+statically calling itself, it MAY NOT have any ability to inspect either
+of these values. Even if this were not the case the calling contract
+cannot assume the existence of some opcode(s) in the interpreter that
+inspect the caller, so providing these two values as context is
+sufficient to decouple the calling contract from the interpreter. It is
+STRONGLY RECOMMENDED that even if the calling contract has &quot;no context&quot;
+that it still provides this base to every <code>eval</code>.
+Calling contracts DO NOT need to call this directly. It is built and
+merged automatically into the standard context built by <code>build</code>.</p>
+<pre><code class="language-solidity">function base() internal view returns (uint256[] memory);
+</code></pre>
+<p><strong>Returns</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>&lt;none&gt;</code></td><td><code>uint256[]</code></td><td>The <code>msg.sender</code> and address of the calling contract using this library, as a context-compatible array.</td></tr>
+</tbody></table>
+</div>
+<h3 id="hash"><a class="header" href="#hash">hash</a></h3>
+<p>Standard hashing process over a single <code>SignedContextV1</code>. Notably used
+to hash a list as <code>SignedContextV1[]</code> but could also be used to hash a
+single <code>SignedContextV1</code> in isolation. Avoids allocating memory by
+hashing each struct field in sequence within the memory scratch space.</p>
+<pre><code class="language-solidity">function hash(SignedContextV1 memory signedContext) internal pure returns (bytes32 hashed);
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>signedContext</code></td><td><code>SignedContextV1</code></td><td>The signed context to hash.</td></tr>
+</tbody></table>
+</div>
+<h3 id="hash-1"><a class="header" href="#hash-1">hash</a></h3>
+<p>Standard hashing process over a list of signed contexts. Situationally
+useful if the calling contract wants to record that it has seen a set of
+signed data then later compare it against some input (e.g. to ensure that
+many calls of some function all share the same input values). Note that
+unlike the internals of <code>build</code>, this hashes over the signer and the
+signature, to ensure that some data cannot be re-signed and used under
+a different provenance later.</p>
+<pre><code class="language-solidity">function hash(SignedContextV1[] memory signedContexts) internal pure returns (bytes32 hashed);
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>signedContexts</code></td><td><code>SignedContextV1[]</code></td><td>The list of signed contexts to hash over.</td></tr>
+</tbody></table>
+</div>
+<p><strong>Returns</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>hashed</code></td><td><code>bytes32</code></td><td>The hash of the signed contexts.</td></tr>
+</tbody></table>
+</div>
+<h3 id="build"><a class="header" href="#build">build</a></h3>
+<p>Builds a standard 2-dimensional context array from base, calling and
+signed contexts. Note that &quot;columns&quot; of a context array refer to each
+<code>uint256[]</code> and each item within a <code>uint256[]</code> is a &quot;row&quot;.</p>
+<pre><code class="language-solidity">function build(uint256[][] memory baseContext, SignedContextV1[] memory signedContexts)
+    internal
+    view
+    returns (uint256[][] memory);
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>baseContext</code></td><td><code>uint256[][]</code></td><td>Anything the calling contract can provide which MAY include input from the <code>msg.sender</code> of the calling contract. The default base context from <code>LibContext.base()</code> DOES NOT need to be provided by the caller, this matrix MAY be empty and will be simply merged into the final context. The base context matrix MUST contain a consistent number of columns from the calling contract so that the expression can always predict how many unsigned columns there will be when it runs.</td></tr>
+<tr><td><code>signedContexts</code></td><td><code>SignedContextV1[]</code></td><td>Signed contexts are provided by the <code>msg.sender</code> but signed by a third party. The expression (author) defines <em>who</em> may sign and the calling contract authenticates the signature over the signed data. Technically <code>build</code> handles all the authentication inline for the calling contract so if some context builds it can be treated as authentic. The builder WILL REVERT if any of the signatures are invalid. Note two things about the structure of the final built context re: signed contexts: - The first column is a list of the signers in order of what they signed - The <code>msg.sender</code> can provide an arbitrary number of signed contexts so expressions DO NOT know exactly how many columns there are. The expression is responsible for defining e.g. a domain separator in a position that would force signed context to be provided in the &quot;correct&quot; order, rather than relying on the <code>msg.sender</code> to honestly present data in any particular structure/order.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="libencodeddispatch"><a class="header" href="#libencodeddispatch">LibEncodedDispatch</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/LibEncodedDispatch.sol">Git Source</a></p>
+<p>Establishes and implements a convention for encoding an interpreter
+dispatch. Handles encoding of several things required for efficient dispatch.</p>
+<h2 id="functions-9"><a class="header" href="#functions-9">Functions</a></h2>
+<h3 id="encode"><a class="header" href="#encode">encode</a></h3>
+<p>Builds an <code>EncodedDispatch</code> from its constituent parts.</p>
+<pre><code class="language-solidity">function encode(address expression_, SourceIndex sourceIndex_, uint16 maxOutputs_)
+    internal
+    pure
+    returns (EncodedDispatch);
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>expression_</code></td><td><code>address</code></td><td>The onchain address of the expression to run.</td></tr>
+<tr><td><code>sourceIndex_</code></td><td><code>SourceIndex</code></td><td>The index of the source to run within the expression as an entrypoint.</td></tr>
+<tr><td><code>maxOutputs_</code></td><td><code>uint16</code></td><td>The maximum outputs the caller can meaningfully use. If the interpreter returns a larger stack than this it is merely wasting gas across the external call boundary.</td></tr>
+</tbody></table>
+</div>
+<p><strong>Returns</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>&lt;none&gt;</code></td><td><code>EncodedDispatch</code></td><td>The encoded dispatch.</td></tr>
+</tbody></table>
+</div>
+<h3 id="decode"><a class="header" href="#decode">decode</a></h3>
+<p>Decodes an <code>EncodedDispatch</code> to its constituent parts.</p>
+<pre><code class="language-solidity">function decode(EncodedDispatch dispatch_) internal pure returns (address, SourceIndex, uint16);
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>dispatch_</code></td><td><code>EncodedDispatch</code></td><td>The <code>EncodedDispatch</code> to decode.</td></tr>
+</tbody></table>
+</div>
+<p><strong>Returns</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>&lt;none&gt;</code></td><td><code>address</code></td><td>The expression, source index, and max outputs as per <code>encode</code>.</td></tr>
+<tr><td><code>&lt;none&gt;</code></td><td><code>SourceIndex</code></td><td></td></tr>
+<tr><td><code>&lt;none&gt;</code></td><td><code>uint16</code></td><td></td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="evaluableconfig"><a class="header" href="#evaluableconfig">EvaluableConfig</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/LibEvaluable.sol">Git Source</a></p>
+<p>Standard struct that can be embedded in ABIs in a consistent format for
+tooling to read/write. MAY be useful to bundle up the data required to call
+<code>IExpressionDeployerV1</code> but is NOT mandatory.</p>
+<pre><code class="language-solidity">struct EvaluableConfig {
+    IExpressionDeployerV1 deployer;
+    bytes[] sources;
+    uint256[] constants;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="evaluable"><a class="header" href="#evaluable">Evaluable</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/LibEvaluable.sol">Git Source</a></p>
+<p>Struct over the return of <code>IExpressionDeployerV1.deployExpression</code>
+which MAY be more convenient to work with than raw addresses.</p>
+<pre><code class="language-solidity">struct Evaluable {
+    IInterpreterV1 interpreter;
+    IInterpreterStoreV1 store;
+    address expression;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="libevaluable"><a class="header" href="#libevaluable">LibEvaluable</a></h1>
+<p><a href="https://github.com/rainprotocol/rain.interface.interpreter/blob/c5802fe07df3e765aea68e65dc3e1ceffc86a305/src/LibEvaluable.sol">Git Source</a></p>
+<p>Common logic to provide consistent implementations of common tasks
+that could be arbitrarily/ambiguously implemented, but work much better if
+consistently implemented.</p>
+<h2 id="functions-10"><a class="header" href="#functions-10">Functions</a></h2>
+<h3 id="hash-2"><a class="header" href="#hash-2">hash</a></h3>
+<p>Hashes an <code>Evaluable</code>, ostensibly so that only the hash need be stored,
+thus only storing a single <code>uint256</code> instead of 3x <code>uint160</code>.</p>
+<pre><code class="language-solidity">function hash(Evaluable memory evaluable_) internal pure returns (bytes32 hash_);
+</code></pre>
+<p><strong>Parameters</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>evaluable_</code></td><td><code>Evaluable</code></td><td>The evaluable to hash.</td></tr>
+</tbody></table>
+</div>
+<p><strong>Returns</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>hash_</code></td><td><code>bytes32</code></td><td>Standard hash of the evaluable.</td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="solidity.min.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
