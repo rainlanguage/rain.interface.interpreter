@@ -1,3 +1,5 @@
+This repo has been archived and merged with https://github.com/rainprotocol/rain.interpreter
+
 # rain.interface.interpreter
 
 Docs at https://rainprotocol.github.io/rain.interface.interpreter
